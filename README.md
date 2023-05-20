@@ -6,7 +6,7 @@
 
 **Mohamed bin Zayed University of Artificial Intelligence**
 
-<a href='#'><img src='https://img.shields.io/badge/Project-Page-Green'></a> [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/zG8RBtH4gb0)
+<a href='#'><img src='https://img.shields.io/badge/Project-Page-Green'></a> [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/fRhm---HWJY)
 
 <p align="center">
     <img src="images/video_chatgpt_logo.png" style="max-width: 50%; max-height: 50%;"> <br>
@@ -14,7 +14,7 @@
 
 ## :rocket: News
 
-+ May-20 : Video-ChatGPT: demo released.
++ May-21 : Video-ChatGPT: demo released.
 
 ## Online Demo
 
