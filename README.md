@@ -172,7 +172,14 @@ We present the different types of data included in the instructional data prepar
 
 ## Acknowledgement
 
-+ [Vicuna](https://github.com/lm-sys/FastChat) has the amazing language capabilities!
++ [LLaMA](https://github.com/facebookresearch/llama): A great attempt towards open and efficient LLMs!
++ [Vicuna](https://github.com/lm-sys/FastChat): Has the amazing language capabilities!
++ [LLaVA](https://github.com/haotian-liu/LLaVA): our architecture is inspired from LLaVA.
++ Thanks to our colleagues at MBZUAI for their essential contribution to the video annotation task, 
+including Dr. Salman Khan, Dr. Fahad Khan, Abdelrahman Shaker, Shahina Kunhimon, Muhammad Uzair, Sanoojan Baliah, Malitha Gunawardhana, Akhtar Munir, 
+Vishal Thengane, Vignagajan Vigneswaran, Dr. Jiale Cao, Dr. Nian Liu, Muhammad Ali, Gayal Kurrupu, Roba Al Majzoub, 
+Jameel Hassan, Hanan Ghani, Dr. Muzammal Naseer, Dr. Akshay Dudhane, Dr. Jean Lahoud, Awais Rauf,
+without which this project would not be possible.
 
 
 If you're using Video-ChatGPT in your research or applications, please cite using this BibTeX:
