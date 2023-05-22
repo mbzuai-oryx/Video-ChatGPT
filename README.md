@@ -141,7 +141,8 @@ Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal
 ![sample23](demo_samples/sample_demo_23.png)
 Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EW9-oBsAnd1Lgp9Gcw3gK2gBKC-vxz7iEyF2om6kktjM5w?e=lxrECj).
 
----# Quantitative Analysis
+---
+# Quantitative Analysis
 ### Benchmarking Video-ChatGPT's Performance with State-of-the-Art Metrics and Comparative Evaluation.
 + Develops the first quantitative video conversation evaluation framework for benchmarking the performance of video understanding generative models.
 + Evaluates Video-ChatGPT on open-ended question answering tasks using the MSRVTT and MSVD datasets.
