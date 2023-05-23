@@ -7,7 +7,7 @@
 **Mohamed bin Zayed University of Artificial Intelligence**
 
 [![Demo](https://img.shields.io/badge/Demo-Try%20it%20out-green)](https://www.ival-mbzuai.com/video-chatgpt)
-[![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/zG8RBtH4gb0)
+[![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/fRhm---HWJY)
 [![DemoClip-1](https://img.shields.io/badge/DemoClip1-Watch-blue)](https://youtu.be/R8qW5EJD2-k)
 [![DemoClip-2](https://img.shields.io/badge/DemoClip2-VideoLink-yellow)](https://youtu.be/ujCxqxMXLVw)
 [![DemoClip-3](https://img.shields.io/badge/DemoClip3-VideoLink-violet)](https://youtu.be/97IWKMsbZ80)
