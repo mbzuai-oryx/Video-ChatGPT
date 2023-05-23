@@ -51,7 +51,7 @@ Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal
 
 ---
 ![sample2](demo_samples/sample_demo_2.png)
-Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EXAa4FCJNaBKh8L9pVieXZMB2Ec0__9ZEdx-ZytByIpWWA?e=I7Oqir).
+Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EapYFSq6aidGratp18-BWOsBoetej0ylv1bBCeLY4waoIw?e=S5JTwT).
 
 ---
 ![sample3](demo_samples/sample_demo_3.png)
@@ -132,6 +132,8 @@ Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal
 
 ---
 ![sample21](demo_samples/sample_demo_21.png)
+Access the video sample [here](https://mbzuaiac-my.sharepoint.com/:v:/g/personal/hanoona_bangalath_mbzuai_ac_ae/ERnu5KvWfENHslDNIZg6hxQBsHRLe1WACT6ghOxz0YtJiA?e=dQD2mX).
+
 ---
 ## Action recognition
 ![sample22](demo_samples/sample_demo_22.png)
