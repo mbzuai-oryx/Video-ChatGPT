@@ -184,6 +184,9 @@ Vishal Thengane, Vignagajan Vigneswaran, Dr. Jiale Cao, Dr. Nian Liu, Muhammad A
 Jameel Hassan, Hanan Ghani, Dr. Muzammal Naseer, Dr. Akshay Dudhane, Dr. Jean Lahoud, Awais Rauf,
 without which this project would not be possible.
 
+#### Note:
+Please note that this is an ongoing work where we are working on improving our architecture design and finetuning on the video instruction data. 
+We will release our codes and pretrained models very soon. Stay tuned!
 
 If you're using Video-ChatGPT in your research or applications, please cite using this BibTeX:
 ```bibtex
