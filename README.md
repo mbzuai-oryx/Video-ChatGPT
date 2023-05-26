@@ -19,6 +19,7 @@
 
 ## :rocket: News
 
++ May-26 : Our improved models, code and technical report will be released soon. Stay tuned!
 + May-21 : Video-ChatGPT: demo released.
 
 ## Online Demo
