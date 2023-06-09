@@ -129,6 +129,19 @@ conv_v1_2 = Conversation(
     sep="###",
 )
 
+
+conv_vicuna_v1_1 = Conversation(
+    system="A chat between a curious user and an artificial intelligence assistant. "
+    "The assistant gives helpful, detailed, and polite answers to the user's questions.",
+    roles=("USER", "ASSISTANT"),
+    version="v1",
+    messages=(),
+    offset=0,
+    sep_style=SeparatorStyle.TWO,
+    sep=" ",
+    sep2="</s>",
+)
+
 conv_video_chatgpt_v1 = Conversation(
     system="You are Video-ChatGPT, a large vision-language assistant. "
            "You are able to understand the video content that the user provides, and assist the user with a variety of tasks using natural language."
@@ -147,6 +160,7 @@ default_conversation = conv_v1_2
 conv_templates = {
     "default": conv_v1_2,
     "video-chatgpt_v1": conv_video_chatgpt_v1,
+    "vicuna_v1_1": conv_vicuna_v1_1,
 }
 
 if __name__ == "__main__":
