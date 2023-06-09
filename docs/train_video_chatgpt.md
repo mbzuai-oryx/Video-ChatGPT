@@ -61,7 +61,7 @@ Alternatively, you can download the pre-computed spatiotemporal CLIP features fr
 Train on 8 A100 40GB GPUs using the following command,
 ```shell
 torchrun --nproc_per_node=8 --master_port 29001 video_chatgpt/train/train_mem.py \
-          --model_name_or_path /share/data/drive_4/Maaz/LLMs/llama/LLaVA_7B-1.1 \
+          --model_name_or_path <path to LLaVA-7B-Lightening-v-1-1 model> \
           --version v1 \
           --data_path <path to the video_chatgpt using `convert_instruction_json_to_training_format.py` script.> \
           --video_folder <path to the spatio-temporal features generated in step 4 using `save_spatio_temporal_clip_features.py` script> \
