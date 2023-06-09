@@ -244,7 +244,7 @@ def parse_args():
     parser.add_argument("--share", action="store_true")
     parser.add_argument("--moderate", action="store_true")
     parser.add_argument("--embed", action="store_true")
-    parser.add_argument("--model-name", type=str, default="facebook/opt-350m")
+    parser.add_argument("--model-name", type=str, required=True)
     parser.add_argument("--vision_tower_name", type=str, default="openai/clip-vit-large-patch14")
     parser.add_argument("--conv-mode", type=str, default="video-chatgpt_v1")
     parser.add_argument("--projection_path", type=str, required=False, default="")
