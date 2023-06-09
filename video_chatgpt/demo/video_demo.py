@@ -97,7 +97,7 @@ def clear_history(img_list):
     if img_list is not None:
         img_list = []
     return (state, state.to_gradio_chatbot(), "", gr.update(value=None, interactive=True),
-            gr.update(value="Upload your video", interactive=True), img_list
+            gr.update(value="Upload Video", interactive=True), img_list
             ) + (disable_btn,) * 5
 
 
@@ -160,8 +160,8 @@ def build_demo(embed_mode):
 
                 # Add a text note beneath the button
                 gr.Markdown(
-                    "Note: Videos above 15Mb might take a long time. Consider reducing it to 320p for faster processing."
-                    " Please press the 'Upload your video' button and wait for it to display 'Start Chatting' "
+                    "NOTE: Please make sure you **<span style='color:red'>press the 'Upload Video' button</span>**"
+                    " and wait for it to display 'Start Chatting "
                     "before submitting question to Video-ChatGPT.",
                     style="color:gray")
                 cur_dir = os.path.dirname(os.path.abspath(__file__))
