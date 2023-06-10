@@ -6,7 +6,7 @@ Please follow the instructions below to train Video-ChatGPT-7B model.
 
 Video-ChatGPT is build using LLaVA. Please follow the following instructions to get LLaVA weights.
 
-- Get the original LLaMA weights in the huggingface format by following the instructions [here](https://huggingface.co/docs/transformers/main/model_doc/llama).
+- Get the original LLaMA weights in the Hugging Face format by following the instructions [here](https://huggingface.co/docs/transformers/main/model_doc/llama).
 - Use the following scripts to get LLaVA weights by applying our delta.
 ```shell
 python scripts/apply_delta.py \ 
@@ -15,7 +15,7 @@ python scripts/apply_delta.py \
         --delta-path liuhaotian/LLaVA-Lightning-7B-delta-v1-1
 ```
 
-The above command will download the LLaVA-Lightening-7B-v1-1 delta from HuggingFace, apply it to the provided LLaMA 
+The above command will download the LLaVA-Lightening-7B-v1-1 delta from Hugging Face, apply it to the provided LLaMA 
 weights and save the LLaVA-Lightening-7B-v1-1 weights in the current directory.
 
 Alternatively you can download the ready LLaVA-Lightening-7B weights from [mmaaz60/LLaVA-Lightening-7B-v1-1](https://huggingface.co/mmaaz60/LLaVA-7B-Lightening-v1-1).
