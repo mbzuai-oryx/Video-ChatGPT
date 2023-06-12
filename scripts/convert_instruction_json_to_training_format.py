@@ -23,7 +23,6 @@ def main():
     for i, content in enumerate(input_json_contents):
         output_content = {'id': content['video_id'], 'video': f"{content['video_id']}.pkl", 'conversations': []}
 
-        # This is critical
         if i % 2 == 0:
             output_content['conversations'].append({'from': 'human', 'value': f"{content['q']}\n<video>"})
         else:
