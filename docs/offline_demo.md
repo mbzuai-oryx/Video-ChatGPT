@@ -39,7 +39,7 @@ Alternatively you can download the ready LLaVA-Lightening-7B weights from [mmaaz
 ### Download sample videos
 
 Download the sample videos to test the demo from [this link](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/Ef0AGw50jt1OrclpYYUdTegBzejbvS2-FXBCoM3qPQexTQ?e=TdnRUG)
-and place them in `video_chatgpt/serve/demo_sample_videos` directory.
+and place them in `video_chatgpt/demo_sample_videos` directory.
 
 ### Run the Demo
 
