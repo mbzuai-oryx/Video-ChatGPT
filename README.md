@@ -20,6 +20,7 @@
 ---
 
 ## :loudspeaker: Latest Updates
+- **Jun-28**: Updated GitHub readme featuring benchmark comparisons of Video-ChatGPT against recent models - Video Chat, Video LLaMA, and LLaMA Adapter. Amid these advanced conversational models, Video-ChatGPT continues to deliver state-of-the-art performance.:fire::fire:
 - **Jun-08** : Released the training code, offline demo, instructional data and technical report. 
 All the resources including models, datasets and extracted features are available 
 [here](https://mbzuaiac-my.sharepoint.com/:f:/g/personal/hanoona_bangalath_mbzuai_ac_ae/Eudc2kLOX4hIuCenDmFe-UIBthkBQKpF9p6KrY2q_s9hwQ?e=zHKbTX). :fire::fire:
@@ -114,24 +115,27 @@ For detailed instructions on performing quantitative evaluation, please refer to
 
 ### Zero-Shot Question-Answer Evaluation
 
-| **Model** | **MSVD** |  | **MSRVTT** |  | **TGIF** |  | **Activity Net** |  |
+| **Model** | **MSVD-QA** |  | **MSRVTT-QA** |  | **TGIF-QA** |  | **Activity Net-QA** |  |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | | **Accuracy** | **Score** | **Accuracy** | **Score** | **Accuracy** | **Score** | **Accuracy** | **Score** |
 | FrozenBiLM | 32.2 | -- | 16.8 | -- | 41.0 | -- | 24.7 | -- |
 | Video Chat | 56.3 | 2.8 | 45.0 | 2.5 | 34.4 | 2.3 | 26.5 | 2.2 |
-| Video-ChatGPT | 64.9 | 3.3 | 49.3 | 2.8 | 51.4 | 3.0 | 35.2 | 2.7 |
+| LLaMA Adapter | 54.9 | 3.1 | 43.8 | 2.7 | - | - | 34.2 | 2.7 |
+| Video LLaMA | 51.6 | 2.5 | 29.6 | 1.8 | - | - | 12.4 | 1.1 |
+| Video-ChatGPT | **64.9** | **3.3** | **49.3** | **2.8** | **51.4** | **3.0** | **35.2** | **2.7** |
+
 
 ---
 
 ### Video-based Generative Performance Benchmarking
 
-| **Evaluation Aspect** | **Video Chat** | **Video-ChatGPT** |
-| --- |:--------------:|:-----------------:|
-| Correctness of Information |      2.50      |       2.25        |
-| Detail Orientation |      2.50      |       2.57        |
-| Contextual Understanding |      2.54      |       2.69        |
-| Temporal Understanding |      1.98      |       2.16        |
-| Consistency |      1.84      |       2.20        |
+| **Evaluation Aspect** | **Video Chat** | **LLaMA Adapter** | **Video LLaMA** | **Video-ChatGPT** |
+| --- |:--------------:|:-----------------:|:--------------:|:-----------------:|
+| Correctness of Information |      2.23      |       2.03        |      1.96      |       **2.40**        |
+| Detail Orientation |      2.50      |       2.32        |      2.18      |       **2.52**        |
+| Contextual Understanding |      2.53      |       2.30        |      2.16      |       **2.62**        |
+| Temporal Understanding |      1.94      |       **1.98**        |      1.82      |       **1.98**        |
+| Consistency |      2.24      |       2.15        |      1.79      |       **2.37**        |
 
 ---
 
