@@ -9,7 +9,7 @@ This readme provides a detailed walkthrough of our proposed quantitative benchma
 
 ## Video-based Generative Performance Benchmarking
 
-Our framework introduces a benchmark designed to assess the text generation performance of video-based conversational models. We leverage a test set curated from the ActivityNet-200 videos for this purpose.
+Our framework introduces a benchmark designed to assess the text generation performance of video-based conversational models. We leverage a test set of 500 samples curated from the ActivityNet-200 videos for this purpose.
 
 You can download the videos from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EatOpE7j68tLm2XAd0u6b8ABGGdVAwLMN6rqlDGM_DwhVA?e=90WIuW) and 
 corresponding human-generated detailed descriptions from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EVheQNh9Y4tEv38kC19522kBYx5IkCxPTVTfmFFGERrezA?e=Y70d2q).
@@ -23,13 +23,13 @@ Our benchmarks cover five key aspects:
 5. Consistency
 
 
-| **Evaluation Aspect** | **Video Chat** | **Video-ChatGPT** |
-| --- |:--------------:|:-----------------:|
-| Correctness of Information |      2.50      |       2.25        |
-| Detail Orientation |      2.50      |       2.57        |
-| Contextual Understanding |      2.54      |       2.69        |
-| Temporal Understanding |      1.98      |       2.16        |
-| Consistency |      1.84      |       2.20        |
+| **Evaluation Aspect** | **Video Chat** | **LLaMA Adapter** | **Video LLaMA** | **Video-ChatGPT** |
+| --- |:--------------:|:-----------------:|:--------------:|:-----------------:|
+| Correctness of Information |      2.23      |       2.03        |      1.96      |       **2.40**        |
+| Detail Orientation |      2.50      |       2.32        |      2.18      |       **2.52**        |
+| Contextual Understanding |      2.53      |       2.30        |      2.16      |       **2.62**        |
+| Temporal Understanding |      1.94      |       **1.98**        |      1.82      |       **1.98**        |
+| Consistency |      2.24      |       2.15        |      1.79      |       **2.37**        |
 
 
 We generate task-specific question-answers by querying the GPT-3.5-Turbo model using the human-generated detailed video descriptions. The generated question-answer pairs are available for download [here](https://mbzuaiac-my.sharepoint.com/:f:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EoS-mdm-KchDqCVbGv8v-9IB_ZZNXtcYAHtyvI06PqbF_A?e=1sNbaa).
@@ -75,12 +75,14 @@ Note: To further understand how the question-answer annotations are prepared for
 Our framework facilitates zero-shot evaluation on five standard open-ended question-answer datasets: MSRVTT, MSVD, TGIF, and ActivityNet-QA. For the sake of brevity, we present the evaluation method on ActivityNet-QA. The evaluation protocol remains the same for all datasets, except for some dataset-specific changes related to videos and annotations.
 
 
-| **Model** | **MSVD** |  | **MSRVTT** |  | **TGIF** |  | **Activity Net** |  |
+| **Model** | **MSVD-QA** |  | **MSRVTT-QA** |  | **TGIF-QA** |  | **Activity Net-QA** |  |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | | **Accuracy** | **Score** | **Accuracy** | **Score** | **Accuracy** | **Score** | **Accuracy** | **Score** |
 | FrozenBiLM | 32.2 | -- | 16.8 | -- | 41.0 | -- | 24.7 | -- |
 | Video Chat | 56.3 | 2.8 | 45.0 | 2.5 | 34.4 | 2.3 | 26.5 | 2.2 |
-| Video-ChatGPT | 64.9 | 3.3 | 49.3 | 2.8 | 51.4 | 3.0 | 35.2 | 2.7 |
+| LLaMA Adapter | 54.9 | 3.1 | 43.8 | 2.7 | - | - | 34.2 | 2.7 |
+| Video LLaMA | 51.6 | 2.5 | 29.6 | 1.8 | - | - | 12.4 | 1.1 |
+| Video-ChatGPT | **64.9** | **3.3** | **49.3** | **2.8** | **51.4** | **3.0** | **35.2** | **2.7** |
 
 
 Follow these steps to conduct the evaluation:
