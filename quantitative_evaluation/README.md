@@ -50,7 +50,7 @@ python video_chatgpt/eval/run_inference_benchmark_general.py \
 - Note that the question-answer pairs (gt_file) are the same for correctness, detailed orientation and Contextual understanding.
 
 - For temporal understanding and consistency, separate question-answer pairs are provided.
-- 
+  
 **Step 2:** Execute the corresponding evaluation script to perform benchmarking.
 
 For example, for correctness criteria:
