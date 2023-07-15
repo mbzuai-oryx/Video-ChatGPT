@@ -13,8 +13,11 @@ The framework enables an in-depth evaluation of video-based conversational model
 
 Our framework introduces a benchmark designed to assess the text generation performance of video-based conversational models. We leverage a test set of 500 samples curated from the ActivityNet-200 videos for this purpose.
 
-You can download the videos from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EatOpE7j68tLm2XAd0u6b8ABGGdVAwLMN6rqlDGM_DwhVA?e=90WIuW) and 
-corresponding human-generated detailed descriptions from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EYqblLdszspJkayPvVIm5s0BCvl0m6q6B-ipmrNg-pqn6A?e=QFzc1U).
+For quantitative evaluation, we curate a test set based on the ActivityNet-200 dataset, featuring videos with rich, dense descriptive captions and associated question-answer pairs from human annotations. 
+We develop an evaluation pipeline using the GPT-3.5 model that assigns a relative score to the generated predictions on a scale of 1-5.
+
+The generated question-answer pairs are available for download [here](https://mbzuaiac-my.sharepoint.com/:f:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EoS-mdm-KchDqCVbGv8v-9IB_ZZNXtcYAHtyvI06PqbF_A?e=1sNbaa) 
+and the corresponding videos can be downloaded from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EatOpE7j68tLm2XAd0u6b8ABGGdVAwLMN6rqlDGM_DwhVA?e=90WIuW).
 
 Our benchmarks cover five key aspects:
 
@@ -34,8 +37,6 @@ Our benchmarks cover five key aspects:
 | Consistency                |      2.24      |       2.15        |      1.79      |       **2.37**        |
 
 &nbsp;
-
-We generate task-specific question-answers by querying the GPT-3.5-Turbo model using the human-generated detailed video descriptions. The generated question-answer pairs are available for download [here](https://mbzuaiac-my.sharepoint.com/:f:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EoS-mdm-KchDqCVbGv8v-9IB_ZZNXtcYAHtyvI06PqbF_A?e=1sNbaa).
 
 Follow the steps below to perform the quantitative benchmarking:
 
