@@ -14,7 +14,7 @@ The framework enables an in-depth evaluation of video-based conversational model
 Our framework introduces a benchmark designed to assess the text generation performance of video-based conversational models. We leverage a test set of 500 samples curated from the ActivityNet-200 videos for this purpose.
 
 You can download the videos from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EatOpE7j68tLm2XAd0u6b8ABGGdVAwLMN6rqlDGM_DwhVA?e=90WIuW) and 
-corresponding human-generated detailed descriptions from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EVheQNh9Y4tEv38kC19522kBYx5IkCxPTVTfmFFGERrezA?e=Y70d2q).
+corresponding human-generated detailed descriptions from [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EYqblLdszspJkayPvVIm5s0BCvl0m6q6B-ipmrNg-pqn6A?e=QFzc1U).
 
 Our benchmarks cover five key aspects:
 
