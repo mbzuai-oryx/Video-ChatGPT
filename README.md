@@ -20,6 +20,7 @@
 ---
 
 ## :loudspeaker: Latest Updates
+- **Jul-15**: Our quantitative evaluation benchmark for Video-based Conversational Models now has its own dedicated website: [https://mbzuai-oryx.github.io/Video-ChatGPT](https://mbzuai-oryx.github.io/Video-ChatGPT). :fire::fire:
 - **Jun-28**: Updated GitHub readme featuring benchmark comparisons of Video-ChatGPT against recent models - Video Chat, Video LLaMA, and LLaMA Adapter. Amid these advanced conversational models, Video-ChatGPT continues to deliver state-of-the-art performance.:fire::fire:
 - **Jun-08** : Released the training code, offline demo, instructional data and technical report. 
 All the resources including models, datasets and extracted features are available 
@@ -108,6 +109,8 @@ More details on our human-assisted and semi-automatic annotation framework for g
 ---
 
 ## Quantitative Evaluation :bar_chart:
+Our paper introduces a new Quantitative Evaluation Framework for Video-based Conversational Models. To explore our benchmarks and understand the framework in greater detail, 
+please visit our dedicated website: [https://mbzuai-oryx.github.io/Video-ChatGPT](https://mbzuai-oryx.github.io/Video-ChatGPT).
 
 For detailed instructions on performing quantitative evaluation, please refer to [QuantitativeEvaluation.md](quantitative_evaluation/README.md).
 
