@@ -104,7 +104,7 @@ For training instructions, check out [train_video_chatgpt.md](docs/train_video_c
 
 We are releasing our 100,000 high-quality video instruction dataset that was used for training our Video-ChatGPT model. You can download the dataset from 
 [here](https://mbzuaiac-my.sharepoint.com/:u:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EWxYslvDeX1PijKWM_WxTkkBDXDDD350YnUQOkbcL8V7Xg?e=Lq9itD). 
-More details on our human-assisted and semi-automatic annotation framework for generating the data are available at [VideoInstructionDataset.md](quantitative_evaluation/README.md).
+More details on our human-assisted and semi-automatic annotation framework for generating the data are available at [VideoInstructionDataset.md](data/README.md).
 
 ---
 
