@@ -12,6 +12,18 @@
 #### **Mohamed bin Zayed University of Artificial Intelligence**
 
 ---
+#### **Video-based Generative Performance Benchmarking**
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/video-based-generative-performance)](https://paperswithcode.com/sota/video-based-generative-performance?p=video-chatgpt-towards-detailed-video)
+
+
+#### **Zeroshot Question-Answer Evaluation**
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/zeroshot-video-question-answer-on-msvd-qa)](https://paperswithcode.com/sota/zeroshot-video-question-answer-on-msvd-qa?p=video-chatgpt-towards-detailed-video)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/zeroshot-video-question-answer-on-msrvtt-qa)](https://paperswithcode.com/sota/zeroshot-video-question-answer-on-msrvtt-qa?p=video-chatgpt-towards-detailed-video)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/zeroshot-video-question-answer-on-tgif-qa)](https://paperswithcode.com/sota/zeroshot-video-question-answer-on-tgif-qa?p=video-chatgpt-towards-detailed-video)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/zeroshot-video-question-answer-on-activitynet)](https://paperswithcode.com/sota/zeroshot-video-question-answer-on-activitynet?p=video-chatgpt-towards-detailed-video)
+
+
+---
 
 | Demo | Paper | Demo Clips | Offline Demo | Training | Video Instruction Data | Quantitative Evaluation | Qualitative Analysis |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
