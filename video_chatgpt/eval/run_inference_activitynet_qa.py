@@ -56,6 +56,7 @@ def run_inference(args):
         question = sample['question']
         id = sample['question_id']
         answer = gt_answers[index]['answer']
+        index += 1
 
         sample_set = {'id': id, 'question': question, 'answer': answer}
 
