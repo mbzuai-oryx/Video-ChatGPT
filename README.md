@@ -32,6 +32,7 @@
 ---
 
 ## :loudspeaker: Latest Updates
+- **Sep-30**: Our VideoInstruct100K dataset can be downloaded from [HuggingFace/VideoInstruct100K](https://huggingface.co/datasets/MBZUAI/VideoInstruct-100K). :fire::fire:
 - **Jul-15**: Our quantitative evaluation benchmark for Video-based Conversational Models now has its own dedicated website: [https://mbzuai-oryx.github.io/Video-ChatGPT](https://mbzuai-oryx.github.io/Video-ChatGPT). :fire::fire:
 - **Jun-28**: Updated GitHub readme featuring benchmark comparisons of Video-ChatGPT against recent models - Video Chat, Video LLaMA, and LLaMA Adapter. Amid these advanced conversational models, Video-ChatGPT continues to deliver state-of-the-art performance.:fire::fire:
 - **Jun-08** : Released the training code, offline demo, instructional data and technical report. 
