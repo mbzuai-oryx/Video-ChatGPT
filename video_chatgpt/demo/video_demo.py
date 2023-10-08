@@ -143,7 +143,7 @@ seafoam = Seafoam()
 def build_demo(embed_mode):
     textbox = gr.Textbox(show_label=False,
                          placeholder="Please upload your video first by clicking 'Upload Video'. Enter text and press ENTER",
-                         visible=True).style(container=False)
+                         visible=True, container=False)
     with gr.Blocks(title="Oryx Video-ChatGPT", theme=seafoam, css=css) as demo:
         state = gr.State()
         img_list = gr.State()
@@ -162,8 +162,7 @@ def build_demo(embed_mode):
                 gr.Markdown(
                     "NOTE: Please make sure you **<span style='color:red'>press the 'Upload Video' button</span>**"
                     " and wait for it to display 'Start Chatting "
-                    "before submitting question to Video-ChatGPT.",
-                    style="color:gray")
+                    "before submitting question to Video-ChatGPT.")
                 cur_dir = os.path.dirname(os.path.abspath(__file__))
                 gr.Examples(examples=[
                     [f"{cur_dir}/demo_sample_videos/sample_2.mp4", "Why is this video strange?"],
@@ -182,7 +181,7 @@ def build_demo(embed_mode):
                                                   label="Max output tokens", )
 
             with gr.Column(scale=6):
-                chatbot = grChatbot(elem_id="chatbot", label="VideoChat-GPT Chatbot", visible=True).style(height=600)
+                chatbot = grChatbot(elem_id="chatbot", label="VideoChat-GPT Chatbot", visible=True, height=600)
                 with gr.Row():
                     with gr.Column(scale=8):
                         textbox.render()
