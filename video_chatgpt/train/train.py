@@ -11,8 +11,8 @@ import transformers
 from torch.utils.data import Dataset
 from video_chatgpt.train.llava_trainer import VideoChatGPTTrainer
 from video_chatgpt import video_conversation as conversation_lib
-from video_chatgpt.model import *
-from video_chatgpt.constants import *
+from video_chatgpt.model import VideoChatGPTLlamaForCausalLM
+from video_chatgpt.constants import DEFAULT_VIDEO_TOKEN, DEFAULT_VIDEO_PATCH_TOKEN, DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN
 
 
 IGNORE_INDEX = -100

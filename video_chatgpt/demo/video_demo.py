@@ -11,7 +11,7 @@ from video_chatgpt.utils import disable_torch_init
 from video_chatgpt.demo.chat import Chat
 from video_chatgpt.demo.template import tos_markdown, css, title, disclaimer, Seafoam
 from video_chatgpt.eval.model_utils import initialize_model
-from video_chatgpt.constants import *
+from video_chatgpt.constants import DEFAULT_VIDEO_PATCH_TOKEN, DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN, LOGDIR
 
 
 logging.basicConfig(level=logging.WARNING)

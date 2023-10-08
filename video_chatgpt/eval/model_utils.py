@@ -6,7 +6,7 @@ import torch
 from transformers import AutoTokenizer, CLIPVisionModel, CLIPImageProcessor
 from video_chatgpt.model import VideoChatGPTLlamaForCausalLM
 from video_chatgpt.utils import disable_torch_init
-from video_chatgpt.constants import *
+from video_chatgpt.constants import DEFAULT_VIDEO_PATCH_TOKEN, DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN
 
 
 def load_video(vis_path, n_clips=1, num_frm=100):

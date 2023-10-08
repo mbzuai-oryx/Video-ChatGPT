@@ -6,7 +6,7 @@ from video_chatgpt.utils import (build_logger)
 from video_chatgpt.video_conversation import conv_templates, SeparatorStyle
 from video_chatgpt.video_conversation import load_video
 from video_chatgpt.model.utils import KeywordsStoppingCriteria
-from video_chatgpt.constants import *
+from video_chatgpt.constants import DEFAULT_VIDEO_TOKEN
 
 
 logging.basicConfig(level=logging.WARNING)
