@@ -6,7 +6,7 @@ import time
 import gradio as gr
 from video_chatgpt.video_conversation import (default_conversation)
 from video_chatgpt.utils import (build_logger, violates_moderation, moderation_msg)
-from video_chatgpt.demo.gradio_patch import Chatbot as grChatbot
+from gradio.components import Chatbot
 from video_chatgpt.utils import disable_torch_init
 from video_chatgpt.demo.chat import Chat
 from video_chatgpt.demo.template import tos_markdown, css, title, disclaimer, Seafoam
@@ -181,7 +181,7 @@ def build_demo(embed_mode):
                                                   label="Max output tokens", )
 
             with gr.Column(scale=6):
-                chatbot = grChatbot(elem_id="chatbot", label="VideoChat-GPT Chatbot", visible=True, height=600)
+                chatbot = Chatbot(elem_id="chatbot", label="VideoChat-GPT Chatbot", visible=True, height=600)
                 with gr.Row():
                     with gr.Column(scale=8):
                         textbox.render()
