@@ -6,6 +6,7 @@ from video_chatgpt.video_conversation import load_video
 from video_chatgpt.model.utils import KeywordsStoppingCriteria
 import logging
 from video_chatgpt.constants import *
+from gradio import Button
 
 
 logging.basicConfig(level=logging.WARNING)
