@@ -21,9 +21,9 @@ logger = build_logger("gradio_web_server", "gradio_web_server.log")
 
 headers = {"User-Agent": "Video-ChatGPT"}
 
-no_change_btn = gr.Button.update()
-enable_btn = gr.Button.update(interactive=True)
-disable_btn = gr.Button.update(interactive=False)
+no_change_btn = gr.Button()
+enable_btn = gr.Button(interactive=True)
+disable_btn = gr.Button(interactive=False)
 
 
 def get_conv_log_filename():
@@ -47,12 +47,12 @@ def load_demo(url_params):
 
     state = default_conversation.copy()
     return (state,
-            gr.Chatbot.update(visible=True),
-            gr.Textbox.update(visible=True),
-            gr.Button.update(visible=True),
-            gr.Button.update(visible=True),
-            gr.Row.update(visible=True),
-            gr.Accordion.update(visible=True))
+            gr.Chatbot(visible=True),
+            gr.Textbox(visible=True),
+            gr.Button(visible=True),
+            gr.Button(visible=True),
+            gr.Row(visible=True),
+            gr.Accordion(visible=True))
 
 
 def vote_last_response(state, vote_type):
@@ -96,8 +96,8 @@ def clear_history(img_list):
     state = default_conversation.copy()
     if img_list is not None:
         img_list = []
-    return (state, state.to_gradio_chatbot(), "", gr.update(value=None, interactive=True),
-            gr.update(value="Upload Video", interactive=True), img_list
+    return (state, state.to_gradio_chatbot(), "", gr.Textbox(value=None, interactive=True),
+            gr.Video(value="Upload Video", interactive=True), img_list
             ) + (disable_btn,) * 5
 
 
@@ -128,12 +128,12 @@ def add_text(state, text, image, first_run):
 
 def upload_image(image, state):
     if image is None:
-        return None, gr.update(interactive=True), state, None, None
+        return None, gr.Button(interactive=True), state, None, None
     state = default_conversation.copy()
     img_list = []
     first_run = True
     llm_message = chat.upload_video(image, img_list)
-    return gr.update(interactive=False), gr.update(value="Start Chatting",
+    return gr.Video(interactive=False), gr.Button(value="Start Chatting",
                                                    interactive=False), state, img_list, first_run
 
 
