@@ -271,5 +271,4 @@ if __name__ == "__main__":
     print('Initialization Finished')
 
     demo = build_demo(args.embed)
-    demo.queue(concurrency_count=args.concurrency_count, status_update_rate=10)
-    demo.launch(share=True, enable_queue=True)
+    demo.queue(concurrency_count=args.concurrency_count, status_update_rate=10).launch(share=True)
