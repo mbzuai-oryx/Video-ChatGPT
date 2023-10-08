@@ -116,7 +116,7 @@ def initialize_model(model_name, projection_path=None):
         tokenizer.add_tokens([DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN], special_tokens=True)
 
     # Resize token embeddings of the model
-    model.resize_token_embeddings(len(tokenizer))
+    model.resize_token_embeddings(len(tokenizer), pad_to_multiple_of=None)
 
     # Load the weights from projection_path after resizing the token_embeddings
     if projection_path:
