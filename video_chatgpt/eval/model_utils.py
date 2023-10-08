@@ -2,11 +2,11 @@ import os
 import numpy as np
 from PIL import Image
 from decord import VideoReader, cpu
+import torch
 from transformers import AutoTokenizer, CLIPVisionModel, CLIPImageProcessor
 from video_chatgpt.model import VideoChatGPTLlamaForCausalLM
 from video_chatgpt.utils import disable_torch_init
-from video_chatgpt.constants import *
-import torch
+from video_chatgpt.constants import DEFAULT_VIDEO_PATCH_TOKEN, DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN
 
 
 def load_video(vis_path, n_clips=1, num_frm=100):
@@ -116,7 +116,7 @@ def initialize_model(model_name, projection_path=None):
         tokenizer.add_tokens([DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN], special_tokens=True)
 
     # Resize token embeddings of the model
-    model.resize_token_embeddings(len(tokenizer))
+    model.resize_token_embeddings(len(tokenizer), pad_to_multiple_of=None)
 
     # Load the weights from projection_path after resizing the token_embeddings
     if projection_path:

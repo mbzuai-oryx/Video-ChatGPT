@@ -4,15 +4,16 @@ import json
 import logging
 import pathlib
 from typing import Dict, Optional, Sequence
+import pickle
 import torch
+import torch.distributed as dist
 import transformers
 from torch.utils.data import Dataset
 from video_chatgpt.train.llava_trainer import VideoChatGPTTrainer
 from video_chatgpt import video_conversation as conversation_lib
-from video_chatgpt.model import *
-import torch.distributed as dist
-from video_chatgpt.constants import *
-import pickle
+from video_chatgpt.model import VideoChatGPTLlamaForCausalLM
+from video_chatgpt.constants import DEFAULT_VIDEO_TOKEN, DEFAULT_VIDEO_PATCH_TOKEN, DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN
+
 
 IGNORE_INDEX = -100
 DEFAULT_PAD_TOKEN = "[PAD]"
@@ -77,7 +78,7 @@ def smart_tokenizer_and_embedding_resize(
     Note: This is the unoptimized version that may make your embedding size not be divisible by 64.
     """
     num_new_tokens = tokenizer.add_special_tokens(special_tokens_dict)
-    model.resize_token_embeddings(len(tokenizer))
+    model.resize_token_embeddings(len(tokenizer), pad_to_multiple_of=None)
 
     if num_new_tokens > 0:
         input_embeddings = model.get_input_embeddings().weight.data

@@ -5,6 +5,7 @@ from torch.nn import CrossEntropyLoss
 from transformers import AutoConfig, AutoModelForCausalLM, LlamaConfig, LlamaModel, LlamaForCausalLM
 from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast
 
+
 DEFAULT_VIDEO_TOKEN = "<video>"
 DEFAULT_VIDEO_PATCH_TOKEN = "<vid_patch>"
 DEFAULT_VID_START_TOKEN = "<vid_start>"
@@ -255,11 +256,11 @@ class VideoChatGPTLlamaForCausalLM(LlamaForCausalLM):
         vision_config = self.get_model().vision_config
         vision_config.use_vid_start_end = mm_use_vid_start_end
         tokenizer.add_tokens([DEFAULT_VIDEO_PATCH_TOKEN], special_tokens=True)
-        self.resize_token_embeddings(len(tokenizer))
+        self.resize_token_embeddings(len(tokenizer), pad_to_multiple_of=None)
 
         if mm_use_vid_start_end:
             num_new_tokens = tokenizer.add_tokens([DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN], special_tokens=True)
-            self.resize_token_embeddings(len(tokenizer))
+            self.resize_token_embeddings(len(tokenizer), pad_to_multiple_of=None)
             vision_config.vid_start_token, vision_config.vid_end_token = tokenizer.convert_tokens_to_ids(
                 [DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN])
 
