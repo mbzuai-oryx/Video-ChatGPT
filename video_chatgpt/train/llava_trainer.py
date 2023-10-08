@@ -1,8 +1,8 @@
 import os
+from typing import Optional
 import torch
 import torch.nn as nn
 from transformers import Trainer
-from typing import Optional
 
 
 def unwrap_model(model: nn.Module) -> nn.Module:

@@ -3,7 +3,6 @@ Usage:
 python3 -m llava.model.consolidate --src ~/model_weights/llava-7b --dst ~/model_weights/llava-7b_consolidate
 """
 import argparse
-
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from video_chatgpt.model import *

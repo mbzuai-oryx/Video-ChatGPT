@@ -5,6 +5,7 @@ from torch.nn import CrossEntropyLoss
 from transformers import AutoConfig, AutoModelForCausalLM, LlamaConfig, LlamaModel, LlamaForCausalLM
 from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast
 
+
 DEFAULT_VIDEO_TOKEN = "<video>"
 DEFAULT_VIDEO_PATCH_TOKEN = "<vid_patch>"
 DEFAULT_VID_START_TOKEN = "<vid_start>"

@@ -2,11 +2,11 @@ import os
 import numpy as np
 from PIL import Image
 from decord import VideoReader, cpu
+import torch
 from transformers import AutoTokenizer, CLIPVisionModel, CLIPImageProcessor
 from video_chatgpt.model import VideoChatGPTLlamaForCausalLM
 from video_chatgpt.utils import disable_torch_init
 from video_chatgpt.constants import *
-import torch
 
 
 def load_video(vis_path, n_clips=1, num_frm=100):

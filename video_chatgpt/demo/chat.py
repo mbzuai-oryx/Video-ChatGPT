@@ -1,12 +1,12 @@
 import time
+import logging
 import torch
+from gradio import Button
 from video_chatgpt.utils import (build_logger)
 from video_chatgpt.video_conversation import conv_templates, SeparatorStyle
 from video_chatgpt.video_conversation import load_video
 from video_chatgpt.model.utils import KeywordsStoppingCriteria
-import logging
 from video_chatgpt.constants import *
-from gradio import Button
 
 
 logging.basicConfig(level=logging.WARNING)

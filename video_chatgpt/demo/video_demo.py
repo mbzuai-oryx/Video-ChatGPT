@@ -3,6 +3,7 @@ import argparse
 import datetime
 import json
 import time
+import logging
 from gradio import Button, Chatbot, Textbox, Row, Accordion, State, Blocks, Video, Markdown, Column, Slider, Examples, JSON
 from video_chatgpt.video_conversation import (default_conversation)
 from video_chatgpt.utils import (build_logger, violates_moderation, moderation_msg)
@@ -12,7 +13,6 @@ from video_chatgpt.demo.template import tos_markdown, css, title, disclaimer, Se
 from video_chatgpt.eval.model_utils import initialize_model
 from video_chatgpt.constants import *
 
-import logging
 
 logging.basicConfig(level=logging.WARNING)
 
