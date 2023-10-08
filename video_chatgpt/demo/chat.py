@@ -1,6 +1,5 @@
 import time
 import torch
-import gradio as gr
 from video_chatgpt.utils import (build_logger)
 from video_chatgpt.video_conversation import conv_templates, SeparatorStyle
 from video_chatgpt.video_conversation import load_video
@@ -15,9 +14,9 @@ logger = build_logger("gradio_web_server", "gradio_web_server.log")
 
 headers = {"User-Agent": "Video-ChatGPT"}
 
-no_change_btn = gr.Button()
-enable_btn = gr.Button(interactive=True)
-disable_btn = gr.Button(interactive=False)
+no_change_btn = Button()
+enable_btn = Button(interactive=True)
+disable_btn = Button(interactive=False)
 
 
 def post_process_code(code):

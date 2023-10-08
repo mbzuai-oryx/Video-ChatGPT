@@ -3,10 +3,9 @@ import argparse
 import datetime
 import json
 import time
-import gradio as gr
+from gradio import Button, Chatbot, Textbox, Row, Accordion, State, Blocks, Video, Markdown, Column, Slider, Examples, JSON
 from video_chatgpt.video_conversation import (default_conversation)
 from video_chatgpt.utils import (build_logger, violates_moderation, moderation_msg)
-from gradio.components import Chatbot
 from video_chatgpt.utils import disable_torch_init
 from video_chatgpt.demo.chat import Chat
 from video_chatgpt.demo.template import tos_markdown, css, title, disclaimer, Seafoam
@@ -21,9 +20,9 @@ logger = build_logger("gradio_web_server", "gradio_web_server.log")
 
 headers = {"User-Agent": "Video-ChatGPT"}
 
-no_change_btn = gr.Button()
-enable_btn = gr.Button(interactive=True)
-disable_btn = gr.Button(interactive=False)
+no_change_btn = Button()
+enable_btn = Button(interactive=True)
+disable_btn = Button(interactive=False)
 
 
 def get_conv_log_filename():
@@ -47,12 +46,12 @@ def load_demo(url_params):
 
     state = default_conversation.copy()
     return (state,
-            gr.Chatbot(visible=True),
-            gr.Textbox(visible=True),
-            gr.Button(visible=True),
-            gr.Button(visible=True),
-            gr.Row(visible=True),
-            gr.Accordion(visible=True))
+            Chatbot(visible=True),
+            Textbox(visible=True),
+            Button(visible=True),
+            Button(visible=True),
+            Row(visible=True),
+            Accordion(visible=True))
 
 
 def vote_last_response(state, vote_type):
@@ -96,8 +95,8 @@ def clear_history(img_list):
     state = default_conversation.copy()
     if img_list is not None:
         img_list = []
-    return (state, state.to_gradio_chatbot(), "", gr.Textbox(value=None, interactive=True),
-            gr.Video(value="Upload Video", interactive=True), img_list
+    return (state, state.to_gradio_chatbot(), "", Textbox(value=None, interactive=True),
+            Video(value="Upload Video", interactive=True), img_list
             ) + (disable_btn,) * 5
 
 
@@ -128,12 +127,12 @@ def add_text(state, text, image, first_run):
 
 def upload_image(image, state):
     if image is None:
-        return None, gr.Button(interactive=True), state, None, None
+        return None, Button(interactive=True), state, None, None
     state = default_conversation.copy()
     img_list = []
     first_run = True
     llm_message = chat.upload_video(image, img_list)
-    return gr.Video(interactive=False), gr.Button(value="Start Chatting",
+    return Video(interactive=False), Button(value="Start Chatting",
                                                    interactive=False), state, img_list, first_run
 
 
@@ -141,30 +140,30 @@ seafoam = Seafoam()
 
 
 def build_demo(embed_mode):
-    textbox = gr.Textbox(show_label=False,
+    textbox = Textbox(show_label=False,
                          placeholder="Please upload your video first by clicking 'Upload Video'. Enter text and press ENTER",
                          visible=True, container=False)
-    with gr.Blocks(title="Oryx Video-ChatGPT", theme=seafoam, css=css) as demo:
-        state = gr.State()
-        img_list = gr.State()
-        first_run = gr.State()
+    with Blocks(title="Oryx Video-ChatGPT", theme=seafoam, css=css) as demo:
+        state = State()
+        img_list = State()
+        first_run = State()
 
         if not embed_mode:
-            gr.Markdown(title)
-            # gr.Markdown(description)
+            Markdown(title)
+            # Markdown(description)
 
-        with gr.Row():
-            with gr.Column(scale=3):
-                imagebox = gr.Video()
-                upload_button = gr.Button(value="Upload Video", interactive=True, variant="primary")
+        with Row():
+            with Column(scale=3):
+                imagebox = Video()
+                upload_button = Button(value="Upload Video", interactive=True, variant="primary")
 
                 # Add a text note beneath the button
-                gr.Markdown(
+                Markdown(
                     "NOTE: Please make sure you **<span style='color:red'>press the 'Upload Video' button</span>**"
                     " and wait for it to display 'Start Chatting "
                     "before submitting question to Video-ChatGPT.")
                 cur_dir = os.path.dirname(os.path.abspath(__file__))
-                gr.Examples(examples=[
+                Examples(examples=[
                     [f"{cur_dir}/demo_sample_videos/sample_2.mp4", "Why is this video strange?"],
                     [f"{cur_dir}/demo_sample_videos/sample_6.mp4",
                      "Can you write a short poem inspired from the video."],
@@ -174,32 +173,32 @@ def build_demo(embed_mode):
                      "What is the main challenge faced by the people on the boat."],
                 ], inputs=[imagebox, textbox])
 
-                with gr.Accordion("Parameters", open=False, visible=False) as parameter_row:
-                    temperature = gr.Slider(minimum=0.0, maximum=1.0, value=0.2, step=0.1, interactive=True,
+                with Accordion("Parameters", open=False, visible=False) as parameter_row:
+                    temperature = Slider(minimum=0.0, maximum=1.0, value=0.2, step=0.1, interactive=True,
                                             label="Temperature", )
-                    max_output_tokens = gr.Slider(minimum=0, maximum=1024, value=512, step=64, interactive=True,
+                    max_output_tokens = Slider(minimum=0, maximum=1024, value=512, step=64, interactive=True,
                                                   label="Max output tokens", )
 
-            with gr.Column(scale=6):
+            with Column(scale=6):
                 chatbot = Chatbot(elem_id="chatbot", label="VideoChat-GPT Chatbot", visible=True, height=600)
-                with gr.Row():
-                    with gr.Column(scale=8):
+                with Row():
+                    with Column(scale=8):
                         textbox.render()
-                    with gr.Column(scale=1, min_width=60):
-                        submit_btn = gr.Button(value="Submit", visible=True)
-                with gr.Row(visible=True) as button_row:
-                    upvote_btn = gr.Button(value="👍  Upvote", interactive=False)
-                    downvote_btn = gr.Button(value="👎  Downvote", interactive=False)
-                    flag_btn = gr.Button(value="⚠️  Flag", interactive=False)
-                    regenerate_btn = gr.Button(value="🔄  Regenerate", interactive=False)
-                    clear_btn = gr.Button(value="🗑️  Clear history", interactive=False)
+                    with Column(scale=1, min_width=60):
+                        submit_btn = Button(value="Submit", visible=True)
+                with Row(visible=True) as button_row:
+                    upvote_btn = Button(value="👍  Upvote", interactive=False)
+                    downvote_btn = Button(value="👎  Downvote", interactive=False)
+                    flag_btn = Button(value="⚠️  Flag", interactive=False)
+                    regenerate_btn = Button(value="🔄  Regenerate", interactive=False)
+                    clear_btn = Button(value="🗑️  Clear history", interactive=False)
 
-        gr.Markdown(disclaimer)
+        Markdown(disclaimer)
 
         if not embed_mode:
-            gr.Markdown(tos_markdown)
+            Markdown(tos_markdown)
 
-        url_params = gr.JSON(visible=False)
+        url_params = JSON(visible=False)
         # Register listeners
         btn_list = [upvote_btn, downvote_btn, flag_btn, regenerate_btn, clear_btn]
         upvote_btn.click(upvote_last_response,
