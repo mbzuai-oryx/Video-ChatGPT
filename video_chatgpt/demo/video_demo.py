@@ -128,7 +128,7 @@ def add_text(state, text, image, first_run):
 
 def upload_image(image, state):
     if image is None:
-        return None, gr.update(interactive=True), state, None
+        return None, gr.update(interactive=True), state, None, None
     state = default_conversation.copy()
     img_list = []
     first_run = True
