@@ -260,7 +260,7 @@ class VideoChatGPTLlamaForCausalLM(LlamaForCausalLM):
 
         if mm_use_vid_start_end:
             num_new_tokens = tokenizer.add_tokens([DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN], special_tokens=True)
-            self.resize_token_embeddings(len(tokenizer), pad_to_multiple_of=None)
+            self.resize_token_embeddings(len(tokenizer))
             vision_config.vid_start_token, vision_config.vid_end_token = tokenizer.convert_tokens_to_ids(
                 [DEFAULT_VID_START_TOKEN, DEFAULT_VID_END_TOKEN])
 
