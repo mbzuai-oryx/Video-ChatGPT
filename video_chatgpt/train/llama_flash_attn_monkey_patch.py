@@ -65,7 +65,7 @@ def forward(
         max_s = q_len
         cu_q_lens = torch.arange(0, (bsz + 1) * q_len, step=q_len, dtype=torch.int32,
                                 device=qkv.device)
-        output = flash_attn_unpadded_qkvpacked_func(
+        output = flash_attn_varlen_qkvpacked_func(
             qkv, cu_q_lens, max_s, 0.0,
             softmax_scale=None, causal=True
         )
