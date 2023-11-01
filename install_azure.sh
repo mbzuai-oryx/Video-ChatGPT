@@ -207,6 +207,8 @@ MAX_JOBS=4 python setup.py install # Cannot use pip install . on this repo. Also
 
 
 # Finally, run training.
+conda activate vtom
+cd ~/vtom
 # OMP_NUM_THREADS = nb_cpu_threads / nproc_per_node: https://github.com/pytorch/pytorch/issues/22260#issuecomment-508196387
 export NPROC_PER_NODE=4
 export OMP_NUM_THREADS=$(($(nproc) / ${NPROC_PER_NODE}))
