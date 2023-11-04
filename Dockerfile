@@ -220,3 +220,106 @@ RUN PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NUM_GPUS} --master_p
     --model_max_length 2048 \
     --gradient_checkpointing True \
     --lazy_preprocess True
+# RUN echo "Installing PyTorch dependencies"
+# RUN conda install -c pytorch magma-cuda121 -y # TODO: include magma-cuda122 building in the future
+# # RUN conda install -c intel -c defaults cmake ninja astunparse expecttest hypothesis psutil pyyaml requests setuptools typing-extensions sympy filelock networkx jinja2 fsspec packaging -y
+# RUN conda install cmake ninja astunparse expecttest hypothesis psutil pyyaml requests setuptools typing-extensions sympy filelock networkx jinja2 fsspec packaging -y
+# RUN conda install -c defaults -c conda-forge jinja2 types-dataclasses optree -y # NOTE: jinja2 needs to be >= 3.1.2, so at the time of writing, cannot be from -c intel.
+
+
+# # # 4.3 Install PyTorch from source
+# WORKDIR ${BUILD_DIR}
+# RUN git clone --recursive --single-branch --branch v${PYTORCH_VERSION} https://github.com/pytorch/pytorch.git
+# # # 1. sync submodules
+# WORKDIR ${BUILD_DIR}/pytorch
+# RUN git submodule sync
+# RUN git submodule update --init --recursive
+
+# # RUN conda activate vtom
+# ENV _GLIBCXX_USE_CXX11_ABI=1
+# ENV CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
+# ENV USE_FFMPEG=1
+# # ENV USE_TBB=1
+# # ENV USE_SYSTEM_TBB=1
+# ENV USE_SYSTEM_NCCL=1
+# # RUN # TODO: ONNX_USE_PROTOBUF_SHARED_LIBS
+# # RUN # TODO: XNNPACK enabled shared
+# RUN echo "Start building pytorch"
+# RUN python setup.py clean && python setup.py develop > install_pytorch.log 2>&1
+# RUN echo "DONE building pytorch"
+# RUN pip install tqdm gradio matplotlib sentencepiece protobuf transformers tokenizers huggingface_hub accelerate
+# WORKDIR ${BUILD_DIR}
+# RUN rm -rf pytorch
+# RUN python -c 'import torch; print(torch.cuda.is_available())'
+
+
+# # 4. Install decord
+# WORKDIR ${BUILD_DIR}
+# RUN git clone --recursive https://github.com/zhanwenchen/decord
+# WORKDIR ${BUILD_DIR}/decord
+# RUN mkdir build
+# WORKDIR ${BUILD_DIR}/decord/build
+# RUN cmake .. -DUSE_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=${SM} -DCMAKE_BUILD_TYPE=Release
+# RUN make -j
+# WORKDIR ${BUILD_DIR}/decord/python
+# RUN python setup.py install --user
+# # Cleanup
+# WORKDIR ${BUILD_DIR}
+# RUN rm -rf decord
+
+# # # 6. Install flash-attention
+# RUN pip install ninja einops
+# WORKDIR ${BUILD_DIR}
+# RUN git clone --single-branch --branch v2.3.2 https://github.com/Dao-AILab/flash-attention.git
+# WORKDIR ${BUILD_DIR}flash-attention
+# RUN MAX_JOBS=4 python setup.py install
+
+# # Clean up packages:
+# RUN conda clean --all -y
+# RUN pip cache purge
+
+
+# # Install vtom
+# WORKDIR /workspace
+# RUN git clone https://github.com/zhanwenchen/vtom.git
+# WORKDIR /workspace/vtom
+# RUN module load awscli
+# # RUN pip install --user awscli
+# WORKDIR /workspace/vtom/data
+# RUN aws s3 cp s3://vtom/video_chatgpt_training_removed.json video_chatgpt_training_removed.json
+# RUN aws s3 cp s3://vtom/ActivityNet_Train_Video-ChatGPT_Clip-L14_Features.zip ActivityNet_Train_Video-ChatGPT_Clip-L14_Features.zip
+# RUN unzip ./ActivityNet_Train_Video-ChatGPT_Clip-L14_Features.zip -d ./clip_features_train
+# RUN rm ActivityNet_Train_Video-ChatGPT_Clip-L14_Features.zip
+
+# # Download models
+# WORKDIR /workspace/vtom
+# RUN 7z e ./LLaVA-7B-Lightening-v1-1-delta.7z
+
+# # Run training
+# WORKDIR /workspace/vtom
+# RUN PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NUM_GPUS} --master_port ${PORT} video_chatgpt/train/train_mem.py \
+#     --model_name_or_path ./LLaVA-7B-Lightening-v1-1-delta \
+#     --version v1 \
+#     --data_path video_chatgpt_training_removed.json \
+#     --video_folder ./data/clip_features_train \
+#     --tune_mm_mlp_adapter True \
+#     --mm_use_vid_start_end \
+#     --bf16 True \
+#     --output_dir ./Video-ChatGPT_7B-1.1_Checkpoints \
+#     --num_train_epochs 3 \
+#     --per_device_train_batch_size 1 \
+#     --per_device_eval_batch_size 1 \
+#     --gradient_accumulation_steps 1 \
+#     --evaluation_strategy "no" \
+#     --save_strategy "steps" \
+#     --save_steps 3000 \
+#     --save_total_limit 3 \
+#     --learning_rate 2e-5 \
+#     --weight_decay 0. \
+#     --warmup_ratio 0.03 \
+#     --lr_scheduler_type "cosine" \
+#     --logging_steps 100 \
+#     --tf32 True \
+#     --model_max_length 2048 \
+#     --gradient_checkpointing True \
+#     --lazy_preprocess True
