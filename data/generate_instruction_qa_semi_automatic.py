@@ -40,22 +40,22 @@ def filter_dense_caption(dense_caption, tag_words):
         return False
 
 def get_caption_summary_prompt(pred_file):
-    file = open(pred_file)
-    contents = json.load(file)
+    with open(pred_file, 'r') as file_in:
+        contents = json.load(file_in)
 
     prompt_prefix_1 = "Generate an informative and concise paragraph summary of a video based on the given information from descriptions of different fragments of the video. " \
                       "Each description contains (a) a Video Caption and (c) a Dense Caption: \n"
     prompt_prefix_2 = "\n b. Video Caption: "
     prompt_prefix_3 = "\n c. Dense Caption: "
-    prompt_suffix = """\n Please follow these rules while generating the summary: 
-    1. Show objects, colors, and positions. 
+    prompt_suffix = """\n Please follow these rules while generating the summary:
+    1. Show objects, colors, and positions.
     2. Use nouns rather than coordinates to show the position information of each object.
     3. Limit the summary to no more than 7 sentences.
     4. Use only one paragraph.
     5. Describe the position of each object.
     6. Combine the information from different fragments of the video into a single coherent summary, ignoring any repetitive information.
     7. Do not mention that the summary is based on captions or dense captions.
-    6. Compare the information across all fragments of video and remove or ignore any inconsistent information. 
+    6. Compare the information across all fragments of video and remove or ignore any inconsistent information.
     7. Do not include any numbers in the summary.
     Please use your intelligence to combine the captions and generate a concise and informative video caption for the entire video.
     """

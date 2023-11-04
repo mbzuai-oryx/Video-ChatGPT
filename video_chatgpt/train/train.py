@@ -361,7 +361,8 @@ class SupervisedDataset(Dataset):
                  tokenizer: transformers.PreTrainedTokenizer):
         super(SupervisedDataset, self).__init__()
         logging.warning("Loading data...")
-        list_data_dict = json.load(open(data_path, "r"))
+        with open(data_path, "r") as file_in:
+            list_data_dict = json.load(file_in)
 
         logging.warning("Formatting inputs...")
         sources = [example["conversations"] for example in list_data_dict]
@@ -385,7 +386,8 @@ class LazySupervisedDataset(Dataset):
                  multimodal_cfg: dict):
         super(LazySupervisedDataset, self).__init__()
         logging.warning("Loading data...")
-        list_data_dict = json.load(open(data_path, "r"))
+        with open(data_path, "r") as file_in:
+            list_data_dict = json.load(file_in)
 
         logging.warning("Formatting inputs...Skip in lazy mode")
         self.tokenizer = tokenizer

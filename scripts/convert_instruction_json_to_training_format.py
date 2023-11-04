@@ -18,7 +18,8 @@ def main():
     input_json_file = args.input_json_file
     output_json_file = args.output_json_file
 
-    input_json_contents = json.load(open(input_json_file, 'r'))
+    with open(input_json_file, 'r') as file_in:
+        input_json_contents = json.load(file_in)
     output_json_contents = []
     for i, content in enumerate(input_json_contents):
         output_content = {'id': content['video_id'], 'video': f"{content['video_id']}.pkl", 'conversations': []}

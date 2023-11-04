@@ -85,8 +85,8 @@ sudo ldconfig
 # 1c. Confirm your ffmpeg has nvcodec enabled
 # Examples in https://pytorch.org/audio/stable/build.ffmpeg.html#checking-the-intallation
 ffprobe -hide_banner -decoders | grep h264
-src="https://download.pytorch.org/torchaudio/tutorial-assets/stream-api/NASAs_Most_Scientifically_Complex_Space_Observatory_Requires_Precision-MP4_small.mp4"
 ffmpeg -hide_banner -encoders | grep 264
+src="https://download.pytorch.org/torchaudio/tutorial-assets/stream-api/NASAs_Most_Scientifically_Complex_Space_Observatory_Requires_Precision-MP4_small.mp4"
 ffmpeg -hide_banner -y -vsync 0 \
      -hwaccel cuvid \
      -hwaccel_output_format cuda \
@@ -139,7 +139,7 @@ git clone --recursive https://github.com/zhanwenchen/decord
 cd decord
 mkdir build && cd build
 cmake .. -DUSE_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=86 -DCMAKE_BUILD_TYPE=Release
-cd .. && rm -rf build && mkdir build && cd build
+# cd .. && rm -rf build && mkdir build && cd build
 make -j
 # Install decord Python bindings
 conda activate vtom
