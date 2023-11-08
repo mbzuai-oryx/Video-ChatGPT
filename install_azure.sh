@@ -174,7 +174,7 @@ cd
 rm ${CONDA_PREFIX}/lib/libffi.7.so ${CONDA_PREFIX}/lib/libffi.so.7 # Solves `Undefined pointer to LIBFFI_7.0_BASE`
 python -c "import torch; print(torch.cuda.is_available()); exit()"
 python -c "from torch import randn, matmul; tensor1 = tensor2 = randn(3, device='cuda'); out = matmul(tensor1, tensor2); print(out.mean(), out.device);"
-pip install tqdm gradio matplotlib sentencepiece protobuf transformers@git+https://github.com/huggingface/transformers.git@cae78c46 tokenizers huggingface_hub accelerate
+pip install -U tqdm gradio matplotlib sentencepiece protobuf transformers tokenizers huggingface_hub accelerate
 
 
 # 3. Install decord
@@ -221,6 +221,39 @@ PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master
           --mm_use_vid_start_end \
           --bf16 True \
           --output_dir ./Video-ChatGPT_7B-1.1_Checkpoints \
+          --num_train_epochs 3 \
+          --per_device_train_batch_size 8 \
+          --per_device_eval_batch_size 8 \
+          --gradient_accumulation_steps 1 \
+          --evaluation_strategy "no" \
+          --save_strategy "steps" \
+          --save_steps 3000 \
+          --save_total_limit 3 \
+          --learning_rate 2e-5 \
+          --weight_decay 0. \
+          --warmup_ratio 0.03 \
+          --lr_scheduler_type "cosine" \
+          --logging_steps 100 \
+          --tf32 True \
+          --model_max_length 2048 \
+          --gradient_checkpointing True \
+          --lazy_preprocess True
+
+# Finally, run training.
+conda activate vtom
+cd ~/vtom
+# OMP_NUM_THREADS = nb_cpu_threads / nproc_per_node: https://github.com/pytorch/pytorch/issues/22260#issuecomment-508196387
+export NPROC_PER_NODE=4
+export OMP_NUM_THREADS=$(($(nproc) / ${NPROC_PER_NODE}))
+PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master_port 29001 video_chatgpt/train/train_mem.py \
+          --model_name_or_path ./LLaVA-Lightning-7B-v1-1 \
+          --version v1 \
+          --data_path data/siq2/qa/qa_train_instruction_removed.json \
+          --video_folder data/siq2/video_features \
+          --tune_mm_mlp_adapter True \
+          --mm_use_vid_start_end \
+          --bf16 True \
+          --output_dir ./vtom_checkpoints_1 \
           --num_train_epochs 3 \
           --per_device_train_batch_size 8 \
           --per_device_eval_batch_size 8 \
