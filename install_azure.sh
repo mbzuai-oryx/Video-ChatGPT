@@ -271,3 +271,7 @@ PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master
           --model_max_length 2048 \
           --gradient_checkpointing True \
           --lazy_preprocess True
+
+
+python /home/zhanwen/vtom/scripts/merge_videos_siq2.py --video_dirpath_in data/siq2/video --video_dirpath_out data/siq2/video_merged_n3 --qa_path data/siq2/qa/qa_train_removed_merged_n3.
+json
