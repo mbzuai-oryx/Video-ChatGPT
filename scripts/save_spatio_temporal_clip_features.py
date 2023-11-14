@@ -1,3 +1,4 @@
+from pathlib import Path
 from os import environ, makedirs as os_makedirs, listdir as os_listdir
 from os.path import exists as os_path_exists
 from sys import stdout as sys_stdout
@@ -134,13 +135,6 @@ def parse_args():
     return args
 
 
-def get_unique_videos(qas):
-    qas_by_video = defaultdict(list)
-    for qa in qas:
-        qas_by_video[qa['vid_name']].append(qa)
-    return qas_by_video
-
-
 def get_unique_ts(qas):
     qas_by_video = defaultdict(set)
     for qa in qas:
@@ -159,7 +153,6 @@ def main():
     with open(qa_path, 'rb') as file_in:
         qas = json_load(file_in)
 
-    # qas_by_video = get_unique_videos(qas)
     os_makedirs(clip_feat_path, exist_ok=True)
     device = torch_device('cuda:0')
     non_blocking = False
