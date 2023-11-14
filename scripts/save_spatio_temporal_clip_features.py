@@ -36,8 +36,7 @@ def save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol
 
 
 def load_video(vis_path, device, cuts, num_frm=100):
-    with open(vis_path, 'rb') as file_in:
-        vr = VideoReader(file_in, ctx=cpu(0), num_threads=0)
+    vr = VideoReader(vis_path, ctx=cpu(0), num_threads=0)
     total_frame_num = len(vr)
     total_num_frm = min(total_frame_num, num_frm)
     frame_idx, ts_to_frames = get_seq_frames(total_frame_num, total_num_frm, cuts)

@@ -392,9 +392,11 @@ python scripts/create_tom_localization_qa.py \
 python scripts/merge_videos_siq2.py \
     --video_dirpath_in data/siq2/video \
     --video_dirpath_out data/siq2/video_merged_n3 \
-    --qa_path data/siq2/qa/qa_train_removed_merged_n3.json
+    --qa_path_train data/siq2/qa/qa_train_removed_merged_n3.json \
+    --qa_path_val data/siq2/qa/qa_val_removed_merged_n3.json
 
 # No difference between train and val - just all videos in a folder
+# m /home/zhanwen/anaconda3/envs/vtom/lib/python3.10/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2
 python scripts/save_spatio_temporal_clip_features.py \
     --ts_by_videol_fpath_out data/siq2/qa/ts_by_video_qa_train_merged_n3.json \
     --qa_train_path data/siq2/qa/qa_train_removed_merged_n3.json \
