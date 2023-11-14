@@ -43,7 +43,7 @@ def load_video(vis_path, device, cuts, num_frm=100):
         # vr = VideoReader(file_in, ctx=gpu(0), num_threads=0)
         vr = VideoReader(file_in, ctx=gpu(0), num_threads=0)
     total_frame_num = len(vr)
-    total_num_frm = min(total_frame_num, num_frm, cuts)
+    total_num_frm = min(total_frame_num, num_frm)
     frame_idx, ts_to_frames = get_seq_frames(total_frame_num, total_num_frm, cuts)
     # img_array = vr.get_batch(frame_idx).asnumpy()  # (n_clips*num_frm, H, W, 3)
     img_array = vr.get_batch(frame_idx) # (n_clips*num_frm, H, W, 3)
