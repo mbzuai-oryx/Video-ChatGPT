@@ -15,7 +15,8 @@ sudo rm /etc/apt/sources.list.d//nccl-2.2.13-ga-cuda9.2.list /etc/apt/sources.li
 
 
 # 1. (DONE)
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb # 20.04
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb # 22.04
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt update
 
@@ -241,14 +242,21 @@ PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master
 
 
 az storage blob download --account-name vtom --container-name vtom --name Zero_Shot_QA.zip --file Zero_Shot_QA.zip
-az storage file download-batch --account-name vtom6315795116 --source Users/video.tom/vtom/Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000 --account-key "07k9G8WhBEkHqNCskHju24pDSZNiaHdECmYh4J1he2Rimrz5SoYc311VbvI4NveiU64k0GQwR0sf+AStTEVD6Q==" --connection-string "DefaultEndpointsProtocol=https;AccountName=vtom6315795116;AccountKey=07k9G8WhBEkHqNCskHju24pDSZNiaHdECmYh4J1he2Rimrz5SoYc311VbvI4NveiU64k0GQwR0sf+AStTEVD6Q==;EndpointSuffix=core.windows.net" -s code-391ff5ac-6576-460f-ba4d-7e03433c68b6 -d .
 
+az storage file download-batch \
+  --account-name <account_name> \
+  --source Users/video.tom/vtom/Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000 \
+  --account-key <your_az_account_key> \
+  -s <your_az_code> \
+  -d .
 
 # Run Eval on ActivityNet QA:
 conda activate vtom
 cd ~/vtom
 PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_activitynet_qa.py \
-    --model-name ${HOME}/vtom/checkpoint-9000  \
+# Generate video features and predictions
+PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_activitynet_qa.py \
+    --model-name Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000  \
     --video_dir data/ActivityNet/all_test \
     --gt_file_question data/ActivityNet/Zero_Shot_QA/test_q.json \
     --gt_file_answers data/ActivityNet/Zero_Shot_QA/test_a.json \
@@ -257,10 +265,10 @@ PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_activitynet_
     # --projection_path Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000
 
 PYTHONPATH="./:$PYTHONPATH" python quantitative_evaluation/evaluate_activitynet_qa.py \
-    --pred_path data/ActivityNet/output/video_chatgpt_activitynet_qa_preds \
+    --pred_path data/ActivityNet/output/video_chatgpt_activitynet_qa_preds.json \
     --output_dir data/ActivityNet/output \
     --output_json data/ActivityNet/output/video_chatgpt_activitynet_qa_results.json \
-    --api_key <your_openai_api_key> \
+    --api_key <my_api_key> \
     --num_tasks 1
 
 # Finally, run training on Social-IQ 2.0.
@@ -297,6 +305,86 @@ PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master
           --gradient_checkpointing True \
           --lazy_preprocess True
 
+
+# Val
+# Make qa_val_instruction.json
+python scripts/convert_instruction_json_to_training_format_siq2.py \
+        --input_json_file data/siq2/qa/qa_val.json \
+        --output_json_file data/siq2/qa/qa_val_instruction.json
+
+
+export NPROC_PER_NODE=4
+export OMP_NUM_THREADS=$(($(nproc) / ${NPROC_PER_NODE}))
+PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_siq2_qa.py \
+    --model-name ${HOME}/vtom_checkpoints_1  \
+    --video_dir data/siq2/video \
+    --gt_file_qa data/siq2/qa/qa_val_instruction_removed.json \
+    --output_dir data/siq2/output \
+    --output_name video_chatgpt_siq2_qa_preds_val
+
+pip install "openai<1.0.0"
+
+PYTHONPATH="./:$PYTHONPATH" python quantitative_evaluation/evaluate_siq2_qa.py \
+    --pred_path data/siq2/output/video_chatgpt_siq2_qa_preds_val.json \
+    --output_dir data/siq2/output \
+    --output_json data/siq2/output/video_chatgpt_siq2_qa_results.json \
+    --api_key <my_api_key> \
+    --num_tasks 1
+
+
+# Test
+
+# Make qa_test_instruction.json
+# First, convert qa_test.json to valid JSON (add , to every line except for the last line. Then enclose everything in [])
+python scripts/convert_instruction_json_to_training_format_siq2.py \
+        --input_json_file data/siq2/qa/qa_test.json \
+        --output_json_file data/siq2/qa/qa_test_instruction.json
+
+# python scripts/remove_nonexistent_data.py
+
+export NPROC_PER_NODE=4
+export OMP_NUM_THREADS=$(($(nproc) / ${NPROC_PER_NODE}))
+PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_siq2_qa.py \
+    --model-name ${HOME}/vtom_checkpoints_1  \
+    --video_dir data/siq2/video \
+    --gt_file_qa data/siq2/qa/qa_test_instruction_removed.json \
+    --output_dir data/siq2/output \
+    --output_name video_chatgpt_siq2_qa_preds_test
+
+PYTHONPATH="./:$PYTHONPATH" python quantitative_evaluation/evaluate_siq2_qa.py \
+    --pred_path data/siq2/output/video_chatgpt_siq2_qa_preds_test.json \
+    --output_dir data/siq2/output \
+    --output_json data/siq2/output/video_chatgpt_siq2_qa_results_test.json \
+    --api_key <my_api_key> \
+    --num_tasks 1
+
+
+# New task: Create new task
+# 1. Create the merged qa_train and qa_test out of removed.
+# Train: Out of a total of 6159 QA pairs, 565 are unavailable, leaving 5594.
+python scripts/remove_nonexistent_data.py \
+    --qa_json_fpath_in data/siq2/qa/qa_train.json \
+    --qa_json_fpath_removed_out data/siq2/qa/qa_train_removed.json \
+    --qa_json_fpath_nonexistent_out data/siq2/qa/qa_train_nonexistent.json \
+    --video_features_dir data/siq2/video_features
+
+
+python data/siq2/create_tom_localization.py \
+    --qa_json_fpath_in data/siq2/qa/qa_train_removed.json \
+    --qa_json_fpath_out data/siq2/qa/qa_train_removed_merged_n3.json \
+    --n 3
+
+# Train: Out of a total of 943 QA pairs, 67 are unavailable, leaving 876.
+python scripts/remove_nonexistent_data.py \
+    --qa_json_fpath_in data/siq2/qa/qa_val.json \
+    --qa_json_fpath_removed_out data/siq2/qa/qa_val_removed.json \
+    --qa_json_fpath_nonexistent_out data/siq2/qa/qa_val_nonexistent.json \
+    --video_features_dir data/siq2/video_features
+
+python data/siq2/create_tom_localization.py \
+    --qa_json_fpath_in data/siq2/qa/qa_val_removed.json \
+    --qa_json_fpath_out data/siq2/qa/qa_val_removed_merged_n3.json \
+    --n 3
 
 python /home/zhanwen/vtom/scripts/merge_videos_siq2.py --video_dirpath_in data/siq2/video --video_dirpath_out data/siq2/video_merged_n3 --qa_path data/siq2/qa/qa_train_removed_merged_n3.
 json
