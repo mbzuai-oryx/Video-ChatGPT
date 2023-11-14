@@ -369,7 +369,7 @@ python scripts/remove_nonexistent_data.py \
     --video_features_dir data/siq2/video_features
 
 
-python data/siq2/create_tom_localization.py \
+python scripts/create_tom_localization_qa.py \
     --qa_json_fpath_in data/siq2/qa/qa_train_removed.json \
     --qa_json_fpath_out data/siq2/qa/qa_train_removed_merged_n3.json \
     --n 3
@@ -381,12 +381,12 @@ python scripts/remove_nonexistent_data.py \
     --qa_json_fpath_nonexistent_out data/siq2/qa/qa_val_nonexistent.json \
     --video_features_dir data/siq2/video_features
 
-python data/siq2/create_tom_localization.py \
+python scripts/create_tom_localization_qa.py \
     --qa_json_fpath_in data/siq2/qa/qa_val_removed.json \
     --qa_json_fpath_out data/siq2/qa/qa_val_removed_merged_n3.json \
     --n 3
 
-python /home/zhanwen/vtom/scripts/merge_videos_siq2.py \
+python scripts/merge_videos_siq2.py \
     --video_dirpath_in data/siq2/video \
     --video_dirpath_out data/siq2/video_merged_n3 \
     --qa_path data/siq2/qa/qa_train_removed_merged_n3.json
