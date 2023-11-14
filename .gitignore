@@ -1,5 +1,34 @@
 __pycache__/
-gradio_web_server.log
 .DS_Store
+
+# Models
+*.bin
+*.pth
+*.pt
+*.pkl
+*.model
+
+# Logs
+*gradio_web_server.log.*
+*.log
+
+# Blobs
+*.webm
+*.mkv
+*.mp4
+*.mp3
+*.wav
+*.jpg
+
+# Custom
+data/ActivityNet/output/
+data/siq2/audio/
+data/siq2/output/
+data/siq2/video_features/
+
+# Custom: ActivityNet
+data/ActivityNet/Zero_Shot_QA/
+
+# Custom: checkpoints
+checkpoint-9000/
 LLaVA-Lightning-7B-v1-1/
-video_chatgpt-7B.bin
