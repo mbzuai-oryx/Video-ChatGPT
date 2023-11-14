@@ -180,7 +180,8 @@ def main():
     ts_by_video = defaultdict(lambda: defaultdict(list))  # vid: {ts: indices}
 
     for video_name in tqdm(all_videos, file=sys_stdout):
-        cuts = cuts_by_video[video_name]
+        video_id = Path(video_name).stem
+        cuts = cuts_by_video[video_id]
         print(f'Started processing {video_name}')
         video_path = f"{video_dir_path}/{video_name}"
         video_id = video_name.split('.')[0]
