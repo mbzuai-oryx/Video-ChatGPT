@@ -375,6 +375,8 @@ python scripts/create_tom_localization_qa.py \
     --n 3
 
 # Train: Out of a total of 943 QA pairs, 67 are unavailable, leaving 876.
+
+# Remove nonexistent validation data
 python scripts/remove_nonexistent_data.py \
     --qa_json_fpath_in data/siq2/qa/qa_val.json \
     --qa_json_fpath_removed_out data/siq2/qa/qa_val_removed.json \
@@ -386,13 +388,16 @@ python scripts/create_tom_localization_qa.py \
     --qa_json_fpath_out data/siq2/qa/qa_val_removed_merged_n3.json \
     --n 3
 
+# Train
 python scripts/merge_videos_siq2.py \
     --video_dirpath_in data/siq2/video \
     --video_dirpath_out data/siq2/video_merged_n3 \
     --qa_path data/siq2/qa/qa_train_removed_merged_n3.json
 
+# No difference between train and val - just all videos in a folder
 python scripts/save_spatio_temporal_clip_features.py \
-    --ts_by_videol_fpath data/siq2/qa/ts_by_video_qa_train_removed_merged_n3.json \
-    --qa_path data/siq2/qa/qa_train_removed_merged_n3.json \
+    --ts_by_videol_fpath_out data/siq2/qa/ts_by_video_qa_train_merged_n3.json \
+    --qa_train_path data/siq2/qa/qa_train_removed_merged_n3.json \
+    --qa_val_path data/siq2/qa/qa_val_removed_merged_n3.json \
     --video_dir_path data/siq2/video_merged_n3 \
-    --clip_feat_path data/clip_features_train_merged_n3
+    --clip_feat_path data/clip_features_merged_n3
