@@ -49,12 +49,12 @@ def add_start_end_to_ts_str(start_str: str, end_str: str, delta: float) -> Tuple
 
 def merge_subvideos(dict_in: dict, dict_keys_split_ns: list[list[str]], sep: str) -> dict[str, list]:
     dict_new = {}
-    delta = 0
     end_new = 0
 
     for v_ids in tqdm(dict_keys_split_ns):
         v_id_new = ''
         qas_new_all_subvs = []
+        delta = 0
         for v_id in v_ids:
             v_id_new += v_id if v_id_new == '' else f'{sep}{v_id}'
             qas = dict_in[v_id]
@@ -62,7 +62,6 @@ def merge_subvideos(dict_in: dict, dict_keys_split_ns: list[list[str]], sep: str
                 start_str, end_str = qa_new['ts'].split('-')
                 start_new, end_new = add_start_end_to_ts_str(start_str, end_str, delta)
                 qa_new['ts'] = f'{start_new}-{end_new}'
-                # qa_new['qid'] = qa_new['qid'].replace(v_id, v_id_new)
             delta = end_new
             qas_new_all_subvs.extend(qas)
         # After v_id_new is finalized, replace
