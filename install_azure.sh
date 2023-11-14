@@ -243,10 +243,17 @@ PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master
 
 az storage blob download --account-name vtom --container-name vtom --name Zero_Shot_QA.zip --file Zero_Shot_QA.zip
 
+az storage file download-batch \
+  --account-name <account_name> \
+  --source Users/video.tom/vtom/Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000 \
+  --account-key <your_az_account_key> \
+  -s <your_az_code> \
+  -d .
 
 # Run Eval on ActivityNet QA:
 conda activate vtom
 cd ~/vtom
+PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_activitynet_qa.py \
 # Generate video features and predictions
 PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_activitynet_qa.py \
     --model-name Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000  \
@@ -268,7 +275,8 @@ PYTHONPATH="./:$PYTHONPATH" python quantitative_evaluation/evaluate_activitynet_
 conda activate vtom
 cd ~/vtom
 # OMP_NUM_THREADS = nb_cpu_threads / nproc_per_node: https://github.com/pytorch/pytorch/issues/22260#issuecomment-508196387
-export NPROC_PER_NODE=4
+export CUDA_VISIBLE_DEVICES="0,1"
+export NPROC_PER_NODE=$(echo ${CUDA_VISIBLE_DEVICES} | tr -cd , | wc -c); ((NUM_GPUS++))
 export OMP_NUM_THREADS=$(($(nproc) / ${NPROC_PER_NODE}))
 PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master_port 29001 video_chatgpt/train/train_mem.py \
           --model_name_or_path ./LLaVA-Lightning-7B-v1-1 \
