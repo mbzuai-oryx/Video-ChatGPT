@@ -386,8 +386,10 @@ python data/siq2/create_tom_localization.py \
     --qa_json_fpath_out data/siq2/qa/qa_val_removed_merged_n3.json \
     --n 3
 
-python /home/zhanwen/vtom/scripts/merge_videos_siq2.py --video_dirpath_in data/siq2/video --video_dirpath_out data/siq2/video_merged_n3 --qa_path data/siq2/qa/qa_train_removed_merged_n3.
-json
+python /home/zhanwen/vtom/scripts/merge_videos_siq2.py \
+    --video_dirpath_in data/siq2/video \
+    --video_dirpath_out data/siq2/video_merged_n3 \
+    --qa_path data/siq2/qa/qa_train_removed_merged_n3.json
 
 python scripts/save_spatio_temporal_clip_features.py \
     --ts_by_videol_fpath data/siq2/qa/ts_by_video_qa_train_removed_merged_n3.json \
