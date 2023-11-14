@@ -400,4 +400,4 @@ python scripts/save_spatio_temporal_clip_features.py \
     --qa_train_path data/siq2/qa/qa_train_removed_merged_n3.json \
     --qa_val_path data/siq2/qa/qa_val_removed_merged_n3.json \
     --video_dir_path data/siq2/video_merged_n3 \
-    --clip_feat_path data/clip_features_merged_n3
+    --clip_feat_path data/siq2/clip_features_merged_n3
