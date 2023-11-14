@@ -73,14 +73,19 @@ def get_seq_frames(total_num_frames, desired_num_frames):
 def get_spatio_temporal_features(features, num_temporal_tokens=100):
     t, s, c = features.shape
 
-    temporal_tokens = np.mean(features, axis=1)
+    # features: [100, 256, 1024]
+    temporal_tokens = np.mean(features, axis=1) # [100, 1,1024], or [100, 1024]
     padding_size = num_temporal_tokens - t
     if padding_size > 0:
         temporal_tokens = np.pad(temporal_tokens, ((0, padding_size), (0, 0)), mode='constant')
 
-    spatial_tokens = np.mean(features, axis=0)
+    spatial_tokens = np.mean(features, axis=0)  # [1, 256, 1024], [256, 1024]
     sp_features = np.concatenate([temporal_tokens, spatial_tokens], axis=0)
-
+    # The first 100 are the average spatial embedding of each of the frames. The last 256 are the average temporal embedding of each of the spatial embedding.
+    # So if we zero out a timeframe, then the corresponding temporal_tokens[t]=0.The last 256 will be reduced by the value of that frame. So if we can load the frame, we can reverse engineer it.
+    # However, we might not be able to find the original embedding, because it may have been discarded.
+    # spatial_tokens = [1, 256, 1024]+[1, 256, 1024]+[1, 256, 1024]/100 - [1, 1, 1024] * 256/100 as an approximation.
+    # The temporal tokens at t = [1, 1, 1024].
     return sp_features
 
 
