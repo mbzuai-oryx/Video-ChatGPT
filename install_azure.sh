@@ -239,11 +239,36 @@ PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master
           --gradient_checkpointing True \
           --lazy_preprocess True
 
-# Finally, run training.
+
+az storage blob download --account-name vtom --container-name vtom --name Zero_Shot_QA.zip --file Zero_Shot_QA.zip
+az storage file download-batch --account-name vtom6315795116 --source Users/video.tom/vtom/Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000 --account-key "07k9G8WhBEkHqNCskHju24pDSZNiaHdECmYh4J1he2Rimrz5SoYc311VbvI4NveiU64k0GQwR0sf+AStTEVD6Q==" --connection-string "DefaultEndpointsProtocol=https;AccountName=vtom6315795116;AccountKey=07k9G8WhBEkHqNCskHju24pDSZNiaHdECmYh4J1he2Rimrz5SoYc311VbvI4NveiU64k0GQwR0sf+AStTEVD6Q==;EndpointSuffix=core.windows.net" -s code-391ff5ac-6576-460f-ba4d-7e03433c68b6 -d .
+
+
+# Run Eval on ActivityNet QA:
+conda activate vtom
+cd ~/vtom
+PYTHONPATH="./:$PYTHONPATH" python video_chatgpt/eval/run_inference_activitynet_qa.py \
+    --model-name ${HOME}/vtom/checkpoint-9000  \
+    --video_dir data/ActivityNet/all_test \
+    --gt_file_question data/ActivityNet/Zero_Shot_QA/test_q.json \
+    --gt_file_answers data/ActivityNet/Zero_Shot_QA/test_a.json \
+    --output_dir data/ActivityNet/output \
+    --output_name video_chatgpt_activitynet_qa_preds
+    # --projection_path Video-ChatGPT_7B-1.1_Checkpoints_old/checkpoint-9000
+
+PYTHONPATH="./:$PYTHONPATH" python quantitative_evaluation/evaluate_activitynet_qa.py \
+    --pred_path data/ActivityNet/output/video_chatgpt_activitynet_qa_preds \
+    --output_dir data/ActivityNet/output \
+    --output_json data/ActivityNet/output/video_chatgpt_activitynet_qa_results.json \
+    --api_key <your_openai_api_key> \
+    --num_tasks 1
+
+# Finally, run training on Social-IQ 2.0.
 conda activate vtom
 cd ~/vtom
 # OMP_NUM_THREADS = nb_cpu_threads / nproc_per_node: https://github.com/pytorch/pytorch/issues/22260#issuecomment-508196387
-export NPROC_PER_NODE=4
+export CUDA_VISIBLE_DEVICES="0,1"
+export NPROC_PER_NODE=$(echo ${CUDA_VISIBLE_DEVICES} | tr -cd , | wc -c); ((NUM_GPUS++))
 export OMP_NUM_THREADS=$(($(nproc) / ${NPROC_PER_NODE}))
 PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=${NPROC_PER_NODE} --master_port 29001 video_chatgpt/train/train_mem.py \
           --model_name_or_path ./LLaVA-Lightning-7B-v1-1 \
