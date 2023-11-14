@@ -37,7 +37,7 @@ def save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol
 
 def load_video(vis_path, device, cuts, num_frm=100):
     with open(vis_path, 'rb') as file_in:
-        vr = VideoReader(file_in, ctx=gpu(0), num_threads=0)
+        vr = VideoReader(file_in, ctx=cpu(0), num_threads=0)
     total_frame_num = len(vr)
     total_num_frm = min(total_frame_num, num_frm)
     frame_idx, ts_to_frames = get_seq_frames(total_frame_num, total_num_frm, cuts)
@@ -58,18 +58,16 @@ def load_video(vis_path, device, cuts, num_frm=100):
 def get_seq_frames(total_num_frames, desired_num_frames, cuts: list[str]):
     # Even selection.
     cuts = sorted(cuts)
-    cuts_float_start = []
     cuts_float_end = []
     for cut in cuts:
         start_str, end_str = cut.split('-')
-        start_float, end_float = float(start_str), float(end_str)
-        cuts_float_start.append(start_float)
+        _, end_float = float(start_str), float(end_str)
         cuts_float_end.append(end_float)
     cuts_float_end = sorted(cuts_float_end)
 
-    summy = sum(cuts_float_end)
+    timestamp_last_frame = cuts_float_end[-1]
 
-    percentiles = [cut_float/summy for cut_float in cuts_float_end]
+    percentiles = [cut_float/timestamp_last_frame for cut_float in cuts_float_end]
     frame_counts = [total_num_frames * percentile for percentile in percentiles]
 
     seg_size = float(total_num_frames - 1) / desired_num_frames
@@ -82,7 +80,7 @@ def get_seq_frames(total_num_frames, desired_num_frames, cuts: list[str]):
         frame_idx = (start + end) // 2
         frame_threshold = frame_counts[frame_counts_index]
         if frame_idx >= frame_threshold:
-            frame_idx += 1
+            frame_counts_index += 1
         ts_subvideo = cuts[frame_counts_index]
         ts_out[ts_subvideo].append(frame_idx)
         seq.append(frame_idx)
@@ -112,9 +110,10 @@ def get_spatio_temporal_features(features, num_temporal_tokens=100):
 def parse_args():
     parser = ArgumentParser(description="Training")
 
-    parser.add_argument("--ts_by_videol_fpath", required=True,
-                        help="Path to read the qa file from.")
-    parser.add_argument("--qa_path", required=True, help="Path to read the qa file from.")
+    parser.add_argument("--ts_by_videol_fpath_out", required=True,
+                        help="Saving the ts by video dict")
+    parser.add_argument("--qa_train_path", required=True, help="Path to read the qa file from.")
+    parser.add_argument("--qa_val_path", required=True, help="Path to read the qa file from.")
     parser.add_argument("--video_dir_path", required=True, help="Path to read the videos from.")
     parser.add_argument("--clip_feat_path", required=True, help="The output dir to save the features in.")
     parser.add_argument("--infer_batch", required=False, type=int, default=32,
@@ -132,15 +131,21 @@ def get_unique_ts(qas):
     return qas_by_video
 
 
+def load_and_combine_qa_train_val(qa_train_path: str, qa_val_path: str) -> list[dict]:
+    with open(qa_train_path, 'rb') as file_in:
+        qas_train: list[dict] = json_load(file_in)
+    with open(qa_val_path, 'rb') as file_in:
+        qas_val: list[dict] = json_load(file_in)
+    return qas_train + qas_val
+
+
 def main():
     args = parse_args()
-    ts_by_videol_fpath = args.ts_by_videol_fpath
-    qa_path = args.qa_path
+    ts_by_videol_fpath_out = args.ts_by_videol_fpath_out
     video_dir_path = args.video_dir_path
     clip_feat_path = args.clip_feat_path
     infer_batch = args.infer_batch
-    with open(qa_path, 'rb') as file_in:
-        qas = json_load(file_in)
+    qas_combined = load_and_combine_qa_train_val(args.qa_train_path, args.qa_val_path)
 
     os_makedirs(clip_feat_path, exist_ok=True)
     device = torch_device('cuda:0')
@@ -158,8 +163,10 @@ def main():
     image_processor_preprocess = image_processor.preprocess
     select_hidden_state_layer = -2
 
-    cuts_by_video = get_unique_ts(qas)
+    cuts_by_video = get_unique_ts(qas_combined)
     ts_by_video = defaultdict(lambda: defaultdict(list))  # vid: {ts: indices}
+    # The issue is that this operates on the space of all videos, not just by the dataset.
+    # So we need to concat the train and the valid.
 
     for video_name in tqdm(all_videos, file=sys_stdout):
         video_id = Path(video_name).stem
@@ -196,12 +203,10 @@ def main():
             raise e
 
         if counter % 512 == 0:  # Save after every 512 videos, update this number as per your requirements
-            save_features(video_clip_features,
-                          clip_feat_path, ts_by_video, ts_by_videol_fpath)
+            save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol_fpath_out)
             video_clip_features = {}
 
-    save_features(video_clip_features, clip_feat_path,
-                  ts_by_video, ts_by_videol_fpath)
+    save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol_fpath_out)
 
 
 if __name__ == "__main__":
