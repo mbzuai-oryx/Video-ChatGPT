@@ -137,14 +137,14 @@ def parse_args():
 def get_unique_videos(qas):
     qas_by_video = defaultdict(list)
     for qa in qas:
-        qas_by_video[qa['video_id']].append(qa)
+        qas_by_video[qa['vid_name']].append(qa)
     return qas_by_video
 
 
 def get_unique_ts(qas):
     qas_by_video = defaultdict(set)
     for qa in qas:
-        qas_by_video[qa['video_id']].add(qa['ts'])
+        qas_by_video[qa['vid_name']].add(qa['ts'])
     return qas_by_video
 
 
