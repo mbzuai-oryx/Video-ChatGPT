@@ -369,22 +369,47 @@ python scripts/remove_nonexistent_data.py \
     --video_features_dir data/siq2/video_features
 
 
-python data/siq2/create_tom_localization.py \
+python scripts/create_tom_localization_qa.py \
     --qa_json_fpath_in data/siq2/qa/qa_train_removed.json \
     --qa_json_fpath_out data/siq2/qa/qa_train_removed_merged_n3.json \
     --n 3
 
 # Train: Out of a total of 943 QA pairs, 67 are unavailable, leaving 876.
+
+# Remove nonexistent validation data
 python scripts/remove_nonexistent_data.py \
     --qa_json_fpath_in data/siq2/qa/qa_val.json \
     --qa_json_fpath_removed_out data/siq2/qa/qa_val_removed.json \
     --qa_json_fpath_nonexistent_out data/siq2/qa/qa_val_nonexistent.json \
     --video_features_dir data/siq2/video_features
 
-python data/siq2/create_tom_localization.py \
+python scripts/create_tom_localization_qa.py \
     --qa_json_fpath_in data/siq2/qa/qa_val_removed.json \
     --qa_json_fpath_out data/siq2/qa/qa_val_removed_merged_n3.json \
     --n 3
 
-python /home/zhanwen/vtom/scripts/merge_videos_siq2.py --video_dirpath_in data/siq2/video --video_dirpath_out data/siq2/video_merged_n3 --qa_path data/siq2/qa/qa_train_removed_merged_n3.
-json
+# Train
+python scripts/merge_videos_siq2.py \
+    --video_dirpath_in data/siq2/video \
+    --video_dirpath_out data/siq2/video_merged_n3 \
+    --qa_path_train data/siq2/qa/qa_train_removed_merged_n3.json \
+    --qa_path_val data/siq2/qa/qa_val_removed_merged_n3.json
+
+# No difference between train and val - just all videos in a folder
+# m /home/zhanwen/anaconda3/envs/vtom/lib/python3.10/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2
+python scripts/save_spatio_temporal_clip_features.py \
+    --ts_by_videol_fpath_out data/siq2/qa/ts_by_video_qa_merged_n3.json \
+    --qa_train_path data/siq2/qa/qa_train_removed_merged_n3.json \
+    --qa_val_path data/siq2/qa/qa_val_removed_merged_n3.json \
+    --video_dir_path data/siq2/video_merged_n3 \
+    --clip_feat_path data/siq2/clip_features_merged_n3
+
+python scripts/process_gt_qa.py \
+    --input_json_file data/siq2/qa/qa_train_removed_merged_n3.json \
+    --ts_dict_fpath data/siq2/qa/ts_by_video_qa_merged_n3.json \
+    --output_json_file data/siq2/qa/qa_train_removed_merged_n3_with_frames_idx.json
+
+python scripts/process_gt_qa.py \
+    --input_json_file data/siq2/qa/qa_val_removed_merged_n3.json \
+    --ts_dict_fpath data/siq2/qa/ts_by_video_qa_merged_n3.json \
+    --output_json_file data/siq2/qa/qa_val_removed_merged_n3_with_frames_idx.json

@@ -4,6 +4,7 @@ from collections import defaultdict
 from os import makedirs as os_makedirs
 from os.path import join as os_path_join, exists as os_path_exists
 from argparse import ArgumentParser
+from multiprocessing import Pool
 from pkg_resources import parse_version
 from tqdm import tqdm
 from PIL import Image as pil
@@ -15,7 +16,8 @@ def parse_args():
 
     parser.add_argument("--video_dirpath_in", required=True, help="")
     parser.add_argument("--video_dirpath_out", required=True, help="")
-    parser.add_argument("--qa_path", required=True, help="")
+    parser.add_argument("--qa_path_train", required=True, help="")
+    parser.add_argument("--qa_path_val", required=True, help="")
 
     args = parser.parse_args()
 
@@ -51,18 +53,22 @@ def concatenate(video_clip_paths, output_path, method="compose"):
         # concatenate the final video with the compose method provided by moviepy
         final_clip = concatenate_videoclips(clips, method="compose")
     # write the output video file
-    final_clip.write_videofile(output_path)
+    if '.webm' in ''.join(output_path):
+        final_clip.write_videofile(output_path)
+    else:
+        codec = 'h264_nvenc'
+        final_clip.write_videofile(output_path, codec=codec)
+    [clip.close() for clip in clips]
+    final_clip.close()
 
 
-def main():
+def merge_video_by_qa_each(vid_new):
+    subv_ids = vid_new.split('+')
+    paths = [os_path_join(video_dirpath_in, f'{subv_id}.mp4') for subv_id in subv_ids]
+    concatenate(paths, os_path_join(video_dirpath_out, f'{vid_new}.mp4'))
 
-    args = parse_args()
-    video_dirpath_in = args.video_dirpath_in
-    video_dirpath_out = args.video_dirpath_out
-    qa_path = args.qa_path
-    if parse_version(pil.__version__)>=parse_version('10.0.0'):
-        pil.ANTIALIAS=pil.LANCZOS
 
+def merge_video_by_qa(qa_path, video_dirpath_in, video_dirpath_out):
     with open(qa_path, 'rb') as file_in:
         qas = json_load(file_in)
 
@@ -73,10 +79,21 @@ def main():
     if not os_path_exists(video_dirpath_out):
         os_makedirs(video_dirpath_out)
 
-    for vid_new in tqdm(vids_new):
-        subv_ids = vid_new.split('+')
-        paths = [os_path_join(video_dirpath_in, f'{subv_id}.mp4') for subv_id in subv_ids]
-        concatenate(paths, os_path_join(video_dirpath_out, f'{vid_new}.mp4'))
+    with Pool() as pool:
+        list(tqdm(pool.imap(merge_video_by_qa_each, vids_new), total=len(vids_new)))
+
+
+def main():
+
+    args = parse_args()
+    video_dirpath_in = args.video_dirpath_in
+    video_dirpath_out = args.video_dirpath_out
+    qa_path_train = args.qa_path_train
+    qa_path_val = args.qa_path_val
+    if parse_version(pil.__version__)>=parse_version('10.0.0'):
+        pil.ANTIALIAS=pil.LANCZOS
+    merge_video_by_qa(qa_path_train, video_dirpath_in, video_dirpath_out)
+    merge_video_by_qa(qa_path_val, video_dirpath_in, video_dirpath_out)
 
 
 if __name__ == '__main__':
