@@ -24,10 +24,6 @@ from decord import VideoReader, cpu, gpu
 from decord.bridge import set_bridge
 set_bridge('torch')
 environ['DECORD_EOF_RETRY_MAX'] = '20480'
-# v_UvPUywSVy1k.mp4 from activitynet
-# social-iq: 1.21it/s with cpu
-# social-iq: 1.09it/s with gpu
-# Can't process /home/zhanwen/siq2/siq2/video/n6-ef_YHeJU.mp4
 
 
 def save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol_fpath):
@@ -41,12 +37,10 @@ def save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol
 
 def load_video(vis_path, device, cuts, num_frm=100):
     with open(vis_path, 'rb') as file_in:
-        # vr = VideoReader(file_in, ctx=gpu(0), num_threads=0)
         vr = VideoReader(file_in, ctx=gpu(0), num_threads=0)
     total_frame_num = len(vr)
     total_num_frm = min(total_frame_num, num_frm)
     frame_idx, ts_to_frames = get_seq_frames(total_frame_num, total_num_frm, cuts)
-    # img_array = vr.get_batch(frame_idx).asnumpy()  # (n_clips*num_frm, H, W, 3)
     img_array = vr.get_batch(frame_idx) # (n_clips*num_frm, H, W, 3)
     del vr
 
@@ -56,10 +50,6 @@ def load_video(vis_path, device, cuts, num_frm=100):
         img_array = F_interpolate(img_array, size=(h, w))
         img_array = img_array.permute(0, 2, 3, 1).to(device='cpu', dtype=torch_uint8, non_blocking=True).numpy()
     img_array = img_array.reshape((1, total_num_frm, img_array.shape[-3], img_array.shape[-2], img_array.shape[-1]))
-
-    # clip_imgs = []
-    # for j in range(total_num_frm):
-    #     clip_imgs.append(Image_fromarray(img_array[0, j]))
 
     clip_imgs = [Image_fromarray(img_array[0, j]) for j in range(total_num_frm)]
     return clip_imgs, ts_to_frames
@@ -140,7 +130,6 @@ def get_unique_ts(qas):
     for qa in qas:
         qas_by_video[qa['vid_name']].add(qa['ts'])
     return qas_by_video
-
 
 
 def main():
