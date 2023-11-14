@@ -398,8 +398,18 @@ python scripts/merge_videos_siq2.py \
 # No difference between train and val - just all videos in a folder
 # m /home/zhanwen/anaconda3/envs/vtom/lib/python3.10/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2
 python scripts/save_spatio_temporal_clip_features.py \
-    --ts_by_videol_fpath_out data/siq2/qa/ts_by_video_qa_train_merged_n3.json \
+    --ts_by_videol_fpath_out data/siq2/qa/ts_by_video_qa_merged_n3.json \
     --qa_train_path data/siq2/qa/qa_train_removed_merged_n3.json \
     --qa_val_path data/siq2/qa/qa_val_removed_merged_n3.json \
     --video_dir_path data/siq2/video_merged_n3 \
     --clip_feat_path data/siq2/clip_features_merged_n3
+
+python scripts/process_gt_qa.py \
+    --input_json_file data/siq2/qa/qa_train_removed_merged_n3.json \
+    --ts_dict_fpath data/siq2/qa/ts_by_video_qa_merged_n3.json \
+    --output_json_file data/siq2/qa/qa_train_removed_merged_n3_with_frames_idx.json
+
+python scripts/process_gt_qa.py \
+    --input_json_file data/siq2/qa/qa_val_removed_merged_n3.json \
+    --ts_dict_fpath data/siq2/qa/ts_by_video_qa_merged_n3.json \
+    --output_json_file data/siq2/qa/qa_val_removed_merged_n3_with_frames_idx.json
