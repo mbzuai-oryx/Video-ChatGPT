@@ -1,6 +1,9 @@
 __pycache__/
 .DS_Store
 
+# Configs
+*.code-workspace
+
 # Models
 *.bin
 *.pth
@@ -32,3 +35,4 @@ data/ActivityNet/Zero_Shot_QA/
 # Custom: checkpoints
 checkpoint-9000/
 LLaVA-Lightning-7B-v1-1/
+llama-7b/
