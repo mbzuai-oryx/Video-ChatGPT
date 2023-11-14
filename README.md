@@ -75,7 +75,8 @@ export MY_SM=86
   --enable-cuvid \
   --disable-postproc \
   --disable-static \
-  --enable-nvdec
+  --enable-nvdec \
+  --enable-libmp3lame
 make clean
 make -j
 sudo make install
@@ -185,12 +186,17 @@ python scripts/save_spatio_temporal_clip_features.py \
         --video_dir_path ./data/videos_train \
         --clip_feat_path ./data/clip_features_train
 
+python scripts/convert_instruction_json_to_training_format_siq2.py \
+      --input_json_file ./data/siq2/qa/qa_train.json \
+      --output_json_file ./data/siq2/qa/qa_train_instruction.json
 
+
+# Train the base model on ActivityNet
 unset LD_PRELOAD
-export IOMP5_PATH=${CONDA_PREFIX}/lib/libiomp5.so
-export LD_PRELOAD=${IOMP5_PATH}${LD_PRELOAD:+:${LD_PRELOAD}}
-export KMP_AFFINITY=granularity=fine,compact,1,0
-export KMP_BLOCKTIME=1
+export IOMP5_PATH=${CONDA_PREFIX}/lib/libiomp5.so # IF Intel
+export LD_PRELOAD=${IOMP5_PATH}${LD_PRELOAD:+:${LD_PRELOAD}} # IF Intel
+export KMP_AFFINITY=granularity=fine,compact,1,0 # IF Intel
+export KMP_BLOCKTIME=1 # IF Intel
 PYTHONPATH="./:$PYTHONPATH" torchrun --nproc_per_node=2 --master_port 29001 video_chatgpt/train/train_mem.py \
           --model_name_or_path ./LLaVA-7B-Lightening-v1-1-delta \
           --version v1 \
