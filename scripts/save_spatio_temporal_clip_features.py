@@ -82,7 +82,7 @@ def get_seq_frames(total_num_frames, desired_num_frames, cuts: list[str]):
         if frame_idx >= frame_threshold:
             frame_counts_index += 1
         ts_subvideo = cuts[frame_counts_index]
-        ts_out[ts_subvideo].append(frame_idx)
+        ts_out[ts_subvideo].append(i)
         seq.append(frame_idx)
 
     return seq, ts_out
