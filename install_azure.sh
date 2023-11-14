@@ -413,3 +413,12 @@ python scripts/process_gt_qa.py \
     --input_json_file data/siq2/qa/qa_val_removed_merged_n3.json \
     --ts_dict_fpath data/siq2/qa/ts_by_video_qa_merged_n3.json \
     --output_json_file data/siq2/qa/qa_val_removed_merged_n3_with_frames_idx.json
+
+# Make training and evaluation tomloc tasks.json
+python scripts/convert_instruction_json_to_training_format_tomloc.py \
+        --input_json_file data/siq2/tomloc/tomloc_val_removed_merged_n3_with_frames_idx.json \
+        --output_json_file data/siq2/tomloc/tomloc_val_removed_merged_n3_with_frames_idx_instruction.json
+
+python scripts/convert_instruction_json_to_training_format_tomloc.py \
+        --input_json_file data/siq2/tomloc/tomloc_train_removed_merged_n3_with_frames_idx.json \
+        --output_json_file data/siq2/tomloc/tomloc_train_removed_merged_n3_with_frames_idx_instruction.json
