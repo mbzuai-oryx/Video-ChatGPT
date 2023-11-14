@@ -7,7 +7,12 @@ from pickle import dump as pickle_dump
 from argparse import ArgumentParser
 from json import load as json_load, dump as json_dump
 from collections import defaultdict
-import numpy as np
+from numpy import (
+    pad as np_pad,
+    mean as np_mean,
+    round as np_round,
+    concatenate as np_concatenate,
+)
 from torch import (
     zeros as torch_zeros,
     as_tensor as torch_as_tensor,
@@ -15,6 +20,7 @@ from torch import (
     float32 as torch_float32,
     uint8 as torch_uint8,
     device as torch_device,
+    no_grad as torch_no_grad,
 )
 from torch.nn.functional import interpolate as F_interpolate
 from PIL.Image import fromarray as Image_fromarray
@@ -36,7 +42,7 @@ def save_features(video_clip_features, clip_feat_path, ts_by_video, ts_by_videol
 
 
 def load_video(vis_path, device, cuts, num_frm=100):
-    vr = VideoReader(vis_path, ctx=cpu(0), num_threads=0)
+    vr = VideoReader(vis_path, ctx=cpu(), num_threads=0)
     total_frame_num = len(vr)
     total_num_frm = min(total_frame_num, num_frm)
     frame_idx, ts_to_frames = get_seq_frames(total_frame_num, total_num_frm, cuts)
@@ -56,14 +62,16 @@ def load_video(vis_path, device, cuts, num_frm=100):
 
 def get_seq_frames(total_num_frames, desired_num_frames, cuts: list[str]):
     # Even selection.
-    cuts = sorted(cuts)
+    cuts_float_start = []
     cuts_float_end = []
     for cut in cuts:
         start_str, end_str = cut.split('-')
-        _, end_float = float(start_str), float(end_str)
+        start_float, end_float = float(start_str), float(end_str)
+        cuts_float_start.append(start_float)
         cuts_float_end.append(end_float)
+    cuts_float_start = sorted(cuts_float_start)
     cuts_float_end = sorted(cuts_float_end)
-
+    cuts_new = [f'{cut_float_start}-{cut_float_end}' for cut_float_start, cut_float_end in zip(cuts_float_start,cuts_float_end)]
     timestamp_last_frame = cuts_float_end[-1]
 
     percentiles = [cut_float/timestamp_last_frame for cut_float in cuts_float_end]
@@ -74,13 +82,13 @@ def get_seq_frames(total_num_frames, desired_num_frames, cuts: list[str]):
     ts_out = defaultdict(list)
     frame_counts_index = 0
     for i in range(desired_num_frames):
-        start = int(np.round(seg_size * i))
-        end = int(np.round(seg_size * (i + 1)))
+        start = int(np_round(seg_size * i))
+        end = int(np_round(seg_size * (i + 1)))
         frame_idx = (start + end) // 2
         frame_threshold = frame_counts[frame_counts_index]
         if frame_idx >= frame_threshold:
             frame_counts_index += 1
-        ts_subvideo = cuts[frame_counts_index]
+        ts_subvideo = cuts_new[frame_counts_index]
         ts_out[ts_subvideo].append(i)
         seq.append(frame_idx)
 
@@ -91,13 +99,13 @@ def get_spatio_temporal_features(features, num_temporal_tokens=100):
     t, s, c = features.shape
 
     # features: [100, 256, 1024]
-    temporal_tokens = np.mean(features, axis=1) # [100, 1,1024], or [100, 1024]
+    temporal_tokens = np_mean(features, axis=1) # [100, 1,1024], or [100, 1024]
     padding_size = num_temporal_tokens - t
     if padding_size > 0:
-        temporal_tokens = np.pad(temporal_tokens, ((0, padding_size), (0, 0)), mode='constant')
+        temporal_tokens = np_pad(temporal_tokens, ((0, padding_size), (0, 0)), mode='constant')
 
-    spatial_tokens = np.mean(features, axis=0)  # [1, 256, 1024], [256, 1024]
-    sp_features = np.concatenate([temporal_tokens, spatial_tokens], axis=0)
+    spatial_tokens = np_mean(features, axis=0)  # [1, 256, 1024], [256, 1024]
+    sp_features = np_concatenate([temporal_tokens, spatial_tokens], axis=0)
     # The first 100 are the average spatial embedding of each of the frames. The last 256 are the average temporal embedding of each of the spatial embedding.
     # So if we zero out a timeframe, then the corresponding temporal_tokens[t]=0.The last 256 will be reduced by the value of that frame. So if we can load the frame, we can reverse engineer it.
     # However, we might not be able to find the original embedding, because it may have been discarded.
@@ -138,6 +146,7 @@ def load_and_combine_qa_train_val(qa_train_path: str, qa_val_path: str) -> list[
     return qas_train + qas_val
 
 
+@torch_no_grad()
 def main():
     args = parse_args()
     ts_by_videol_fpath_out = args.ts_by_videol_fpath_out
@@ -147,12 +156,13 @@ def main():
     qas_combined = load_and_combine_qa_train_val(args.qa_train_path, args.qa_val_path)
 
     os_makedirs(clip_feat_path, exist_ok=True)
-    device = torch_device('cuda:0')
-    non_blocking = False
+    device_map = 'cuda'
+    device = torch_device('cuda')
+    non_blocking = True
 
     # Initialize the CLIP model
-    image_processor = CLIPImageProcessor.from_pretrained('openai/clip-vit-large-patch14', torch_dtype=torch_float16, device_map='cuda')
-    vision_tower = CLIPVisionModel.from_pretrained('openai/clip-vit-large-patch14', torch_dtype=torch_float16, device_map='cuda')
+    image_processor = CLIPImageProcessor.from_pretrained('openai/clip-vit-large-patch14', torch_dtype=torch_float16, device_map=device_map)
+    vision_tower = CLIPVisionModel.from_pretrained('openai/clip-vit-large-patch14', torch_dtype=torch_float16, device_map=device_map)
     vision_tower.eval()
 
     print('Initialized CLIP model')
@@ -172,12 +182,11 @@ def main():
         cuts = cuts_by_video[video_id]
         print(f'Started processing {video_name}')
         video_path = f"{video_dir_path}/{video_name}"
-        video_id = video_name.split('.')[0]
         if os_path_exists(f"{clip_feat_path}/{video_id}.pkl"):  # Check if the file is already processed
             continue
         try:
             video, ts_out = load_video(video_path, device, cuts, num_frm=100)
-            ts_by_video[video_name] = ts_out
+            ts_by_video[video_id] = ts_out
             video_tensor = image_processor_preprocess(video, return_tensors='pt')['pixel_values'].to(torch_float16, non_blocking=non_blocking)
 
             n_chunk = len(video_tensor)
