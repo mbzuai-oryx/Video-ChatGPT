@@ -202,10 +202,10 @@ If you're using Video-ChatGPT in your research or applications, please cite usin
 ```bibtex
     @article{Maaz2023VideoChatGPT,
         title={Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models},
-        author={Muhammad Maaz, Hanoona Rasheed, Salman Khan and Fahad Khan},
-        journal={ArXiv 2306.05424},
+        author={Maaz, Muhammad and Rasheed, Hanoona and Khan, Salman and Khan, Fahad Shahbaz},
+        journal={arXiv:2306.05424},
         year={2023}
-    }
+}
 ```
 
 ## License :scroll:
