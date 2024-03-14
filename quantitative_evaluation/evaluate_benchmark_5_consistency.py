@@ -118,7 +118,7 @@ def main():
     for sample in new_pred_contents:
         id = sample['video_name']
         question1 = sample['Q1']
-        question2 = sample['Q1']
+        question2 = sample['Q2']
         answer = sample['A']
         pred1 = sample['pred1']
         pred2 = sample['pred2']
