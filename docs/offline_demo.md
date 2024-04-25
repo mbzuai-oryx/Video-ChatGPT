@@ -44,7 +44,7 @@ and place them in `video_chatgpt/demo_sample_videos` directory.
 ### Run the Demo
 
 ```shell
-python video_chatgpt/demo/video_demo.py 
+python -m video_chatgpt.demo.video_demo \ 
         --model-name <path to the LLaVA-Lightening-7B-v1-1 weights prepared in step 3> \
         --projection_path <path to the downloaded video-chatgpt weights>
 ```
