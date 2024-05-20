@@ -4,7 +4,7 @@
     <img src="https://i.imgur.com/waxVImv.png" alt="Oryx Video-ChatGPT">
 </p>
 
-### Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models
+### Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models [ACL 2024 🔥]
 
 #### [Muhammad Maaz](https://www.muhammadmaaz.com)* , [Hanoona Rasheed](https://www.hanoonarasheed.com/)* , [Salman Khan](https://salman-h-khan.github.io/) and [Fahad Khan](https://sites.google.com/view/fahadkhans/home)
 \* Equally contributing first authors
@@ -32,6 +32,7 @@
 ---
 
 ## :loudspeaker: Latest Updates
+- **May-16**: Video-ChatGPT is accepted at ACL 2024! 🎊🎊
 - **Sep-30**: Our VideoInstruct100K dataset can be downloaded from [HuggingFace/VideoInstruct100K](https://huggingface.co/datasets/MBZUAI/VideoInstruct-100K). :fire::fire:
 - **Jul-15**: Our quantitative evaluation benchmark for Video-based Conversational Models now has its own dedicated website: [https://mbzuai-oryx.github.io/Video-ChatGPT](https://mbzuai-oryx.github.io/Video-ChatGPT). :fire::fire:
 - **Jun-28**: Updated GitHub readme featuring benchmark comparisons of Video-ChatGPT against recent models - Video Chat, Video LLaMA, and LLaMA Adapter. Amid these advanced conversational models, Video-ChatGPT continues to deliver state-of-the-art performance.:fire::fire:
