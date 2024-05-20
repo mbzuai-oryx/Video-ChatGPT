@@ -200,11 +200,11 @@ without which this project would not be possible.
 
 If you're using Video-ChatGPT in your research or applications, please cite using this BibTeX:
 ```bibtex
-    @article{Maaz2023VideoChatGPT,
-        title={Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models},
-        author={Maaz, Muhammad and Rasheed, Hanoona and Khan, Salman and Khan, Fahad Shahbaz},
-        journal={arXiv:2306.05424},
-        year={2023}
+@inproceedings{Maaz2023VideoChatGPT,
+    title={Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models},
+    author={Maaz, Muhammad and Rasheed, Hanoona and Khan, Salman and Khan, Fahad Shahbaz},
+    booktitle={Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL 2024)},
+    year={2024}
 }
 ```
 
