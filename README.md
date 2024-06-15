@@ -32,14 +32,19 @@
 ---
 
 ## :loudspeaker: Latest Updates
-- **May-16**: Video-ChatGPT is accepted at ACL 2024! 🎊🎊
-- **Sep-30**: Our VideoInstruct100K dataset can be downloaded from [HuggingFace/VideoInstruct100K](https://huggingface.co/datasets/MBZUAI/VideoInstruct-100K). :fire::fire:
-- **Jul-15**: Our quantitative evaluation benchmark for Video-based Conversational Models now has its own dedicated website: [https://mbzuai-oryx.github.io/Video-ChatGPT](https://mbzuai-oryx.github.io/Video-ChatGPT). :fire::fire:
-- **Jun-28**: Updated GitHub readme featuring benchmark comparisons of Video-ChatGPT against recent models - Video Chat, Video LLaMA, and LLaMA Adapter. Amid these advanced conversational models, Video-ChatGPT continues to deliver state-of-the-art performance.:fire::fire:
-- **Jun-08** : Released the training code, offline demo, instructional data and technical report. 
+- **Jun-14-24**: *VideoGPT+* is released. It achieves SoTA results on multiple benchmarks. Check it out at [VideoGPT+](https://github.com/mbzuai-oryx/VideoGPT-plus) :fire::fire:
+- **Jun-14-24**: *Semi-automatic video annotation pipeline* is released. Check it out at [GitHub](https://github.com/mbzuai-oryx/VideoGPT-plus), [HuggingFace](https://huggingface.co/datasets/MBZUAI/video_annotation_pipeline). :fire::fire:
+- **Jun-14-24**: *VCGBench-Diverse Benchmarks* are released. It provides 4,354 human annotated QA pairs across 18 video categories to extensively evaluate the performance of a video-conversation model. Check it out at [GitHub](https://github.com/mbzuai-oryx/VideoGPT-plus), [HuggingFace](https://huggingface.co/datasets/MBZUAI/VCGBench-Diverse). :fire::fire:
+---
+
+- **May-16-24**: Video-ChatGPT is accepted at ACL 2024! 🎊🎊
+- **Sep-30-23**: Our VideoInstruct100K dataset can be downloaded from [HuggingFace/VideoInstruct100K](https://huggingface.co/datasets/MBZUAI/VideoInstruct-100K). :fire::fire:
+- **Jul-15-23**: Our quantitative evaluation benchmark for Video-based Conversational Models now has its own dedicated website: [https://mbzuai-oryx.github.io/Video-ChatGPT](https://mbzuai-oryx.github.io/Video-ChatGPT). :fire::fire:
+- **Jun-28-23**: Updated GitHub readme featuring benchmark comparisons of Video-ChatGPT against recent models - Video Chat, Video LLaMA, and LLaMA Adapter. Amid these advanced conversational models, Video-ChatGPT continues to deliver state-of-the-art performance.:fire::fire:
+- **Jun-08-23** : Released the training code, offline demo, instructional data and technical report. 
 All the resources including models, datasets and extracted features are available 
 [here](https://mbzuaiac-my.sharepoint.com/:f:/g/personal/hanoona_bangalath_mbzuai_ac_ae/Eudc2kLOX4hIuCenDmFe-UIBthkBQKpF9p6KrY2q_s9hwQ?e=zHKbTX). :fire::fire:
-- **May-21** : Video-ChatGPT: demo released.
+- **May-21-23** : Video-ChatGPT: demo released.
 
 ---
 
