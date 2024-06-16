@@ -12,6 +12,10 @@
 #### **Mohamed bin Zayed University of Artificial Intelligence**
 
 ---
+#### **Diverse Video-based Generative Performance Benchmarking (VCGBench-Diverse)**
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/vcgbench-diverse-on-videoinstruct)](https://paperswithcode.com/sota/vcgbench-diverse-on-videoinstruct?p=video-chatgpt-towards-detailed-video)
+
+
 #### **Video-based Generative Performance Benchmarking**
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-chatgpt-towards-detailed-video/video-based-generative-performance)](https://paperswithcode.com/sota/video-based-generative-performance?p=video-chatgpt-towards-detailed-video)
 
