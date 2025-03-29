@@ -36,6 +36,9 @@
 ---
 
 ## :loudspeaker: Latest Updates
+- **Mar-28-25**: *Mobile-VideoGPT* is released. It achieves excellent results on multiple benchmarks with 2x higher throughput. Check it out [Mobile-VideoGPT](https://github.com/Amshaker/Mobile-VideoGPT) :fire::fire:
+---
+
 - **Jun-14-24**: *VideoGPT+* is released. It achieves SoTA results on multiple benchmarks. Check it out at [VideoGPT+](https://github.com/mbzuai-oryx/VideoGPT-plus) :fire::fire:
 - **Jun-14-24**: *Semi-automatic video annotation pipeline* is released. Check it out at [GitHub](https://github.com/mbzuai-oryx/VideoGPT-plus), [HuggingFace](https://huggingface.co/datasets/MBZUAI/video_annotation_pipeline). :fire::fire:
 - **Jun-14-24**: *VCGBench-Diverse Benchmarks* are released. It provides 4,354 human annotated QA pairs across 18 video categories to extensively evaluate the performance of a video-conversation model. Check it out at [GitHub](https://github.com/mbzuai-oryx/VideoGPT-plus), [HuggingFace](https://huggingface.co/datasets/MBZUAI/VCGBench-Diverse). :fire::fire:
