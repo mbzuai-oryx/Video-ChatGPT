@@ -31,7 +31,7 @@
 
 | Demo | Paper | Demo Clips | Offline Demo | Training | Video Instruction Data | Quantitative Evaluation | Qualitative Analysis |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [![Demo](https://img.shields.io/badge/-Try%20it%20out-green)](https://www.ival-mbzuai.com/video-chatgpt) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/fRhm---HWJY) | [![paper](https://img.shields.io/badge/Paper-<COLOR>.svg)](https://arxiv.org/abs/2306.05424) | [![DemoClip-1](https://img.shields.io/badge/-DemoClip1-blue)](https://youtu.be/R8qW5EJD2-k) [![DemoClip-2](https://img.shields.io/badge/-DemoClip2-yellow)](https://youtu.be/ujCxqxMXLVw) [![DemoClip-3](https://img.shields.io/badge/-DemoClip3-violet)](https://youtu.be/97IWKMsbZ80) [![DemoClip-4](https://img.shields.io/badge/-DemoClip4-orange)](https://youtu.be/ZyJZfTg_Ttc) | [Offline Demo](#running-demo-offline-cd) | [Training](#training-train) | [Video Instruction Dataset](#video-instruction-dataset-open_file_folder) | [Quantitative Evaluation](#quantitative-evaluation-bar_chart) | [Qualitative Analysis](#qualitative-analysis-mag) |
+| [![Demo](https://img.shields.io/badge/-Try%20it%20out-green)](https://www.ival-mbzuai.net/video-chatgpt) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/fRhm---HWJY) | [![paper](https://img.shields.io/badge/Paper-<COLOR>.svg)](https://arxiv.org/abs/2306.05424) | [![DemoClip-1](https://img.shields.io/badge/-DemoClip1-blue)](https://youtu.be/R8qW5EJD2-k) [![DemoClip-2](https://img.shields.io/badge/-DemoClip2-yellow)](https://youtu.be/ujCxqxMXLVw) [![DemoClip-3](https://img.shields.io/badge/-DemoClip3-violet)](https://youtu.be/97IWKMsbZ80) [![DemoClip-4](https://img.shields.io/badge/-DemoClip4-orange)](https://youtu.be/ZyJZfTg_Ttc) | [Offline Demo](#running-demo-offline-cd) | [Training](#training-train) | [Video Instruction Dataset](#video-instruction-dataset-open_file_folder) | [Quantitative Evaluation](#quantitative-evaluation-bar_chart) | [Qualitative Analysis](#qualitative-analysis-mag) |
 
 ---
 
@@ -57,10 +57,10 @@ All the resources including models, datasets and extracted features are availabl
 
 ## Online Demo :computer:
 
-:fire::fire: **You can try our demo using the provided examples or by uploading your own videos [HERE](https://www.ival-mbzuai.com/video-chatgpt).** :fire::fire:
+:fire::fire: **You can try our demo using the provided examples or by uploading your own videos [HERE](https://www.ival-mbzuai.net/video-chatgpt).** :fire::fire:
 
 :fire::fire: **Or click the image to try the demo!** :fire::fire:
-[![demo](docs/images/demo_icon.png)](https://www.ival-mbzuai.com/video-chatgpt)
+[![demo](docs/images/demo_icon.png)](https://www.ival-mbzuai.net/video-chatgpt)
 You can access all the videos we demonstrate on [here](https://mbzuaiac-my.sharepoint.com/:f:/g/personal/hanoona_bangalath_mbzuai_ac_ae/EqrZjHG0KoFNhx6nDcCmFU0BtRqWyg8_zUgzvNQDY5t_3Q?e=AoEdnI).
 
 ---
