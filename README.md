@@ -233,3 +233,54 @@ Please raise any issues or questions [here](https://github.com/mbzuai-oryx/Video
 [<img src="docs/images/IVAL_logo.png" width="200" height="100">](https://www.ival-mbzuai.net)
 [<img src="docs/images/Oryx_logo.png" width="100" height="100">](https://github.com/mbzuai-oryx)
 [<img src="docs/images/MBZUAI_logo.png" width="360" height="85">](https://mbzuai.ac.ae)
+
+
+## Running with Docker :whale:
+
+This application can be built and run using Docker.
+
+### Prerequisites
+
+*   [Docker](https://docs.docker.com/get-docker/) installed on your system.
+*   If you require GPU access within the container (e.g., for CUDA applications), ensure you have the [NVIDIA Docker runtime](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) installed.
+
+### Building the Image
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/mbzuai-oryx/Video-ChatGPT.git
+    cd Video-ChatGPT
+    ```
+
+2.  **Build the Docker image:**
+    ```bash
+    docker build -t video-chatgpt:latest .
+    ```
+    This command builds the image using the `Dockerfile` in the current directory and tags it as `video-chatgpt:latest`.
+
+### Running the Container
+
+1.  **Run the container interactively (shell access):**
+    To start a container and get a bash shell inside it:
+    ```bash
+    docker run -it --rm video-chatgpt:latest
+    ```
+    If you need GPU access:
+    ```bash
+    docker run -it --rm --gpus all video-chatgpt:latest
+    ```
+
+2.  **Running the Gradio Demo:**
+    The Dockerfile exposes port 7860, which is commonly used by Gradio demos. To run the demo (assuming `video_chatgpt/demo/video_demo.py` is the entrypoint for it):
+    ```bash
+    docker run -it --rm --gpus all -p 7860:7860 video-chatgpt:latest python video_chatgpt/demo/video_demo.py
+    ```
+    You should then be able to access the demo in your web browser at `http://localhost:7860`.
+
+    *(Note: The exact command to run the demo might vary depending on the application's structure. You might need to adjust the python script path or command.)*
+
+### Additional Notes
+
+*   The `PYTHONPATH` is set to `/app` within the container.
+*   The working directory inside the container is `/app`.
+*   The application uses a conda environment named `video_chatgpt`.

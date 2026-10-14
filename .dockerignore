@@ -1,0 +1,43 @@
+# Git specific
+.git
+.gitignore
+.gitattributes
+
+# Python specific
+*.pyc
+*.pyo
+__pycache__/
+*.egg-info/
+venv/
+env/
+.env
+*.venv
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+build/
+dist/
+*.tar.gz
+*.zip
+
+# Data and Documentation (assuming not needed in the runtime image)
+data/
+docs/
+quantitative_evaluation/ # Contains scripts and data for evaluation, not runtime
+*.ipynb
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local files
+secrets.txt
+credentials.json
